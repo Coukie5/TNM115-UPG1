@@ -13,6 +13,10 @@ body {
     
 }
 
+.northen {
+    height: 75%;
+}
+
 .h1-heading {
     color: #c5c6c7;
     font-size: 72px;
@@ -30,7 +34,7 @@ nav {
     padding: 0 20px; 
 }
 
-nav .logo {
+nav > .logo {
     color: #fff;
     font-size: 24px; 
     font-weight: 600;
@@ -118,7 +122,7 @@ nav form .search-container {
     background-color: #0b0c10;
     padding: 20px;
     text-align: center;
-    margin-top: 25%;
+    
     color: #c5c6c7;
 }
 
@@ -175,4 +179,138 @@ footer {
 
 .footer-items ul li a:hover {
     opacity: 1;
+}
+
+/* About page */
+
+.about-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 50px;
+    padding-right: 50px;
+    justify-content: space-around;
+}
+
+.about-item {
+    max-width: 45%;
+}
+
+.h1-about {
+    text-align: left;
+    color: #c5c6c7;
+    font-size: 68px;
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+
+.about-text {
+    padding-left: 20px;
+    font-size: 20px;
+    color: #c5c6c7;
+    max-width: 50%;
+    
+}
+
+.bechdel-box {
+    border: 1px solid #c5c6c7;
+    padding: 50px 100px 50px 100px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.h3-criteria {
+    margin-top: 0;
+    text-align: center;
+    color: #c5c6c7;
+}
+
+.list-criteria {
+    color: #c5c6c7;
+    margin-top: 10%;
+}
+
+/* Movie Info page */
+
+.movieInfo-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-top: 10%;
+    max-width: 50%;
+}
+
+.movieInfo-header {
+    color: #c5c6c7;
+    font-size: 60px;
+}
+
+.movieInfo-Data-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 10px;
+    justify-content: space-evenly;
+    max-width: 400px;
+    color: #c5c6c7;
+}
+
+.movieInfo-Desc {
+    margin-top: 2%;
+    width: 70%;
+    color: #c5c6c7;
+}
+
+.movieInfo-genre {
+    display: flex;
+    margin-top: 2%;
+}
+
+.movieInfo-genre ul{    
+    display: flex;
+    list-style: none; 
+}
+
+
+.movieInfo-genre ul li {
+    display: flex;
+    flex-direction: column;
+    margin-right: 30px;
+    color: #0b0c10;
+    font-size: 16px; 
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 25px;
+    padding: 5px 10px; 
+    background-color: #45a29e; 
+    transition: background-color 0.3s ease;
+}
+
+.movieInfo-link {
+    margin-top: 2%;
+}
+
+.movieInfo-link a {
+    color: #c5c6c7;
+}
+
+.movieInfo-bechdel-text {
+    margin-top: 2%;
+    color: #c5c6c7
+}
+
+.movieInfo-bechdel-box {
+    width: 700px;
+    border: 1px solid #c5c6c7;
+    padding: 50px 100px 50px 100px;
+    margin-top: 1%;
+    margin-bottom: 10%;
+}
+
+.body-bg {
+    background-image: url("./media/thegod.jpg");
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    
 }
