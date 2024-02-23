@@ -10,6 +10,8 @@
 body {
     background: #1f2833;
     margin: 0; 
+    position: relative;
+  min-height: 100vh;
     
 }
 
@@ -144,8 +146,10 @@ nav form .search-container {
 }
 
 /* Footer */
+
 footer {
     background-color: #0b0c10;
+
 }
 
 .footer-container {
@@ -311,10 +315,49 @@ footer {
 }
 
 .body-bg {
-    background-image: url("./media/thegod.jpg");
+    background-image: url("../media/thegod.jpg");
     background-repeat: no-repeat;
     height: 100%;
     background-position: center;
     background-size: cover;
     
 }
+
+
+/* Bechdel test div movies */ 
+.movies-container ol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.movie-box {
+    display: flex;
+    flex-direction: row;
+    color: #c5c6c7;
+    border: 1px solid #66fcf1;
+    padding: 50px 100px 50px 100px;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    width: 50%;
+    background-color: #1f2833; 
+    transition: background-color 0.3s ease;
+}
+
+.movie-box:hover {
+    cursor: pointer;
+    background-color: #45a29e; 
+    transition: background-color 0.8s ease;
+}
+
+.div-movie-info {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.flexitem {
+    margin-right: 5%;
+}
+

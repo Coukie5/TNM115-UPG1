@@ -18,18 +18,18 @@ const serverUrl = "http://" + hostname + ":" + port + "";
 // initialization of server object
 const server = http.createServer(async (req, res) => {
     console.log("create server");
-    const requestUrl = new URL(serverUrl + req.url);
-    const pathComponents = requestUrl.pathname.split("/");
+    /*const requestUrl = new URL(serverUrl + req.url);
+    const pathComponents = requestUrl.pathname.split("/");*/
 
     if(req.method == "GET"){
 
-        if(pathComponents){
-            const dbBechdel = await getDbBechdel(pathComponents);
-            routing_data(res, JSON.stringify(dbBechdel));
-        }else{
-            const dbImdb = await getDbImdb(pathComponents);
+        
+            /*const dbBechdel = await getDbBechdel();
+            routing_data(res, JSON.stringify(dbBechdel));*/
+        
+            const dbImdb = await getDbImdb();
             routing_data(res, JSON.stringify(dbImdb));
-        }
+        
         
     }
     else if(req.method == "OPTIONS"){
@@ -91,8 +91,8 @@ async function getDbBechdel(){
 
     const filterQuery = {};
     const sortQuery = {name: 1};
-    const projectionQuery = { _id: 1, name: 1};
-    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
+    const projectionQuery = { _id: 1, title: 1};
+    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(5).toArray();
     //console.log("Found/Projected Documents:", findResult);
     return findResult;
 }
@@ -100,12 +100,13 @@ async function getDbBechdel(){
 async function getDbImdb(){
     
     const db = dbClient.db("tnm115-project");
-    const dbCollectionName_imdb = db.collection("imdb");
+    const dbCollection = db.collection("imdb");
 
     const filterQuery = {};
-    const sortQuery = {name: 1};
-    const projectionQuery = { _id: 1, name: 1};
-    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
+    const sortQuery = {votes: -1};
+    let n = 2 * 5;
+    const projectionQuery = { _id: 1, name: 1, year: 1, runtime: 1, rating: 1, description: 1, votes: 1, director: 1, star: 1};
+    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).skip(n).limit(5).toArray();
     //console.log("Found/Projected Documents:", findResult);
     return findResult;
 }
