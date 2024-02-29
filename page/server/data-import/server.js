@@ -24,11 +24,20 @@ const server = http.createServer(async (req, res) => {
     if(req.method == "GET"){
 
         
-            /*const dbBechdel = await getDbBechdel();
-            routing_data(res, JSON.stringify(dbBechdel));*/
+            const dbBechdel = await getDbBechdel();
+            /*routing_data(res, JSON.stringify(dbBechdel));*/
         
             const dbImdb = await getDbImdb();
-            routing_data(res, JSON.stringify(dbImdb));
+
+            calc(dbBechdel,dbImdb);
+            console.log(Array.length)
+            console.log(dbBechdel[0].rating)
+
+            sendResponse(res, 200, "application/json", JSON.stringify(Array));
+            console.log(Array[0])
+
+            //console.log(dbBechdel)
+            //routing_data(res, JSON.stringify(dbImdb));
         
         
     }
@@ -39,6 +48,19 @@ const server = http.createServer(async (req, res) => {
         sendResponse(res, 200, "text/plain", "Welcome on the ARTIST");
     }
 });
+
+let Array = []
+
+function calc(be, im){
+    Array = [];
+    for(let i = 0; i < im.length; i++){
+        for(let j = 0; j < be.length; j++){
+            if(im[i].normalized_id === be[j].normalized_imdb_id){
+                Array.push({IMDb: im[i], bechdel: be[j].rating});
+            }
+        }
+    }  
+}
 
 // start up of the initialized (and configured) server
 server.listen(port, hostname, () => {
@@ -68,7 +90,8 @@ function sendResponse(res, statusCode, contentType, data){
 function routing_data(res, jsonString) {
     try {
         const movieJsonDataFromDb = JSON.parse(jsonString);
-        console.log(1, movieJsonDataFromDb);
+        /*console.log(1, movieJsonDataFromDb);
+        console.log(movieJsonDataFromDb[0].normalized_id)*/
 
         sendResponse(res, 200, "application/json", jsonString);
 
@@ -91,8 +114,8 @@ async function getDbBechdel(){
 
     const filterQuery = {};
     const sortQuery = {name: 1};
-    const projectionQuery = { _id: 1, title: 1};
-    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(5).toArray();
+    const projectionQuery = { _id: 1, normalized_imdb_id: 1, title: 1, rating: 1};
+    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
     //console.log("Found/Projected Documents:", findResult);
     return findResult;
 }
@@ -105,8 +128,9 @@ async function getDbImdb(){
     const filterQuery = {};
     const sortQuery = {votes: -1};
     let n = 2 * 5;
-    const projectionQuery = { _id: 1, name: 1, year: 1, runtime: 1, rating: 1, description: 1, votes: 1, director: 1, star: 1};
-    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).skip(n).limit(5).toArray();
+    /*.skip(n).limit(5)*/
+    const projectionQuery = { _id: 1, normalized_id: 1, name: 1, year: 1, runtime: 1, rating: 1, description: 1, votes: 1, director: 1, star: 1};
+    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(100).toArray();
     //console.log("Found/Projected Documents:", findResult);
     return findResult;
 }

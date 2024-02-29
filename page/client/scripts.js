@@ -62,6 +62,8 @@ function loadMovies(){
     const divContainer = document.createElement("div");
     divContainer.className = "movies-container";
 
+    console.log(jsonobject)
+
     const listElement = document.createElement("ol");
     jsonobject.forEach(function(movie) {
         
@@ -75,8 +77,11 @@ function loadMovies(){
         
         const listItem = document.createElement("li");
 
+
+        console.log(movie.bechdel)
         const textElement = document.createElement("h2");
-        textElement.innerHTML = movie.name;
+        textElement.innerHTML = movie.IMDb.name;
+        
         listItem.appendChild(textElement);
 
         const divMovieInfo = document.createElement("div");
@@ -84,22 +89,22 @@ function loadMovies(){
 
         const textRuntime = document.createElement("p");
         textRuntime.className = "flexitem";
-        textRuntime.innerHTML = "Duration: " + movie.runtime;
+        textRuntime.innerHTML = "Duration: " + movie.IMDb.runtime;
         divMovieInfo.appendChild(textRuntime);
 
         const textYear = document.createElement("p");
         textYear.className = "flexitem";
-        textYear.innerHTML = "Year :" + movie.year;
+        textYear.innerHTML = "Year :" + movie.IMDb.year;
         divMovieInfo.appendChild(textYear);
 
         const textImdb = document.createElement("p");
         textImdb.className = "flexitem";
-        textImdb.innerHTML = "IMDb :" + movie.rating;
+        textImdb.innerHTML = "IMDb :" + movie.IMDb.rating;
         divMovieInfo.appendChild(textImdb);
         listItem.appendChild(divMovieInfo);
         
         const textDesc = document.createElement("p");
-        textDesc.innerHTML = movie.description;
+        textDesc.innerHTML = movie.IMDb.description;
         listItem.appendChild(textDesc);
 
         const divDirAct = document.createElement("div");
@@ -107,17 +112,17 @@ function loadMovies(){
 
         const textDir = document.createElement("p");
         textDir.className = "flexitem";
-        textDir.innerHTML = "Director: " + movie.director[0];
+        textDir.innerHTML = "Director: " + movie.IMDb.director[0];
         divDirAct.appendChild(textDir);
         
         const textStar = document.createElement("p");
         textStar.className = "flexitem";
-        textStar.innerHTML = "Actors: " + movie.star[0] + ", " + movie.star[1];
+        textStar.innerHTML = "Actors: " + movie.IMDb.star[0] + ", " + movie.IMDb.star[1];
         divDirAct.appendChild(textStar);
         listItem.appendChild(divDirAct);
 
         const textVotes = document.createElement("p");
-        textVotes.innerHTML = "Votes: " + movie.votes;
+        textVotes.innerHTML = "Votes: " + movie.IMDb.votes;
         listItem.appendChild(textVotes);
         
         itemInfo.appendChild(listItem)
