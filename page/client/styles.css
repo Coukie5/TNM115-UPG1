@@ -323,12 +323,14 @@ footer {
     
 }
 
-
 /* Bechdel test div movies */ 
+#target-movies {
+    width: 50%;
+}
+
 .movies-container ol {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .movie-box {
@@ -339,7 +341,6 @@ footer {
     padding: 50px 100px 50px 100px;
     margin-top: 1%;
     margin-bottom: 2%;
-    width: 50%;
     background-color: #1f2833; 
     transition: background-color 0.3s ease;
 }
@@ -361,3 +362,58 @@ footer {
     margin-right: 5%;
 }
 
+/* Bechdel result box */
+
+.bechdel-movie-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+
+.bechdel-calc-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #c5c6c7;
+    background-color: #45a29e;
+    padding: 50px 50px 50px 50px;
+    width: 400px;
+    height: 600px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.score-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+}
+
+.score-item {
+    margin-top: 15px;
+    height: 20px;
+}
+
+.score-result {
+    width: 80px;
+    height: 20px;
+    margin-left: 10px;
+    background-color: #fff;
+    border: 1px solid black;
+    margin-top: 15px;
+}
+
+.check-score {
+    display: flex;
+    width: 200px;
+    height: 100px;
+    margin-top: 20%;
+    background-color: #66fcf1;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+}
+
+.check-score p {
+    
+}

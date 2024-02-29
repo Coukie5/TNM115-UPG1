@@ -26,10 +26,51 @@
     <div>
         <button onclick="getImdbDb()">Load bechdel movies</button>
     </div>
-
-    <div id="target-movies">
-
+    <div>
+        <button onclick="getImdbDb(null,'year')">Sort bechdel movies</button>
     </div>
+
+    <div class="bechdel-movie-container">
+        <div class="bechdel-calc-box">
+            <h3 class="h3-criteria">Bechdel test result</h3>
+            <h4 class="h3-criteria">Based on sorted movies</h4>
+            <div class="score-container">
+                    <div class="score-text">
+                        <div class="score-item">
+                            <p>How many movies got 0:</p>
+                        </div>
+                        <div class="score-item">
+                            <p>How many movies got 1:</p>
+                        </div>
+                        <div class="score-item">
+                            <p>How many movies got 2:</p>
+                        </div>
+                        <div class="score-item">
+                            <p>How many movies got 3:</p>
+                        </div>
+                        <div class="score-item">
+                            <p class="average-score">Average score:</p>
+                        </div>
+                    </div>
+                    <div class="score-result-container">
+                        <div class="score-result">
+                        </div>
+                        <div class="score-result">
+                        </div>
+                        <div class="score-result">
+                        </div>
+                        <div class="score-result">
+                        </div>
+                        <div class="score-result">
+                        </div>
+                    </div>
+            </div>
+                <div class="check-score"><p>Check bechdel score</p></div>
+        </div>
+        <div id="target-movies">
+        </div>
+    </div>
+        
     
 
     <footer>

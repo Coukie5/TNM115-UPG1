@@ -18,23 +18,39 @@ const serverUrl = "http://" + hostname + ":" + port + "";
 // initialization of server object
 const server = http.createServer(async (req, res) => {
     console.log("create server");
-    /*const requestUrl = new URL(serverUrl + req.url);
-    const pathComponents = requestUrl.pathname.split("/");*/
+    const requestUrl = new URL(serverUrl + req.url);
+    const pathComponents = requestUrl.pathname.split("/");
+    console.log(pathComponents);
 
     if(req.method == "GET"){
+            let db;
+            if (pathComponents[1] == "null"){
+                pathComponents[1] = null;
+            } 
+            if (pathComponents[2] == "null"){
+                pathComponents[2] = null
+            }
 
-        
-            const dbBechdel = await getDbBechdel();
-            /*routing_data(res, JSON.stringify(dbBechdel));*/
-        
-            const dbImdb = await getDbImdb();
+            db = await getDatabase(pathComponents[1], pathComponents[2]);
+            
+            
+            sendResponse(res, 200, "application/json", JSON.stringify(db));
 
-            calc(dbBechdel,dbImdb);
-            console.log(Array.length)
-            console.log(dbBechdel[0].rating)
+            // const dbBechdel = await getDbBechdel();
+            // /*routing_data(res, JSON.stringify(dbBechdel));*/
+            // let dbImdb;
+            // if(pathComponents[1] === 'undefined'){
+            //     dbImdb = await getDbImdb(null,null);
+            // }else {
+            //     dbImdb = await getDbImdb(pathComponents[1],pathComponents[2]);
+            // }
+            
+            // calc(dbBechdel,dbImdb);
+            // console.log(Array.length)
+            // console.log(dbBechdel[0].rating)
 
-            sendResponse(res, 200, "application/json", JSON.stringify(Array));
-            console.log(Array[0])
+            // sendResponse(res, 200, "application/json", JSON.stringify(Array));
+            // console.log(Array[0])
 
             //console.log(dbBechdel)
             //routing_data(res, JSON.stringify(dbImdb));
@@ -48,19 +64,6 @@ const server = http.createServer(async (req, res) => {
         sendResponse(res, 200, "text/plain", "Welcome on the ARTIST");
     }
 });
-
-let Array = []
-
-function calc(be, im){
-    Array = [];
-    for(let i = 0; i < im.length; i++){
-        for(let j = 0; j < be.length; j++){
-            if(im[i].normalized_id === be[j].normalized_imdb_id){
-                Array.push({IMDb: im[i], bechdel: be[j].rating});
-            }
-        }
-    }  
-}
 
 // start up of the initialized (and configured) server
 server.listen(port, hostname, () => {
@@ -107,33 +110,84 @@ function routing_data(res, jsonString) {
     const dbCollectionName_bechdel = db.collection("bechdel");
     const dbCollectionName_imdb = db.collection("imdb");*/
 
-async function getDbBechdel(){
+// async function getDbBechdel(){
     
+//     const db = dbClient.db("tnm115-project");
+//     const dbCollection = db.collection("bechdel");
+
+//     const filterQuery = {};
+//     const sortQuery = {name: 1};
+//     const projectionQuery = { _id: 1, normalized_imdb_id: 1, title: 1, rating: 1};
+//     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
+//     //console.log("Found/Projected Documents:", findResult);
+//     return findResult;
+// }
+
+async function getDatabase(filter, sort){
     const db = dbClient.db("tnm115-project");
-    const dbCollection = db.collection("bechdel");
+    const dbCollection = db.collection("movieDb");
 
-    const filterQuery = {};
-    const sortQuery = {name: 1};
-    const projectionQuery = { _id: 1, normalized_imdb_id: 1, title: 1, rating: 1};
-    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
-    //console.log("Found/Projected Documents:", findResult);
-    return findResult;
-}
+    console.log("F: " + filter);
+    console.log("S:" + sort);
 
-async function getDbImdb(){
-    
-    const db = dbClient.db("tnm115-project");
-    const dbCollection = db.collection("imdb");
+    let filterQuery = {};
+    if(filter == null){
+        filterQuery = {};
+    }
+    else {
+        filterQuery = filter + ": 1";
+    }
 
-    const filterQuery = {};
-    const sortQuery = {votes: -1};
-    let n = 2 * 5;
-    /*.skip(n).limit(5)*/
-    const projectionQuery = { _id: 1, normalized_id: 1, name: 1, year: 1, runtime: 1, rating: 1, description: 1, votes: 1, director: 1, star: 1};
+    let sortQuery = {};
+    if(sort == null){
+        console.log("S")
+        sortQuery = {"IMDb.votes": -1} ;
+        
+    } else {
+        const s = "IMDb." + sort;
+        sortQuery = {s : 1};
+    }
+    console.log(filterQuery)
+    console.log(sortQuery)
+    // normalized_id: 1, name: 1, year: 1, runtime: 1, rating: 1, description: 1, votes: 1, director: 1, star: 1
+    const projectionQuery = {IMDb: 1, bechdel: 1};
     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(100).toArray();
-    //console.log("Found/Projected Documents:", findResult);
+
     return findResult;
 }
+
+// async function getDbImdb(filter, sort){
+    
+//     const db = dbClient.db("tnm115-project");
+//     const dbCollection = db.collection("imdb");
+//     console.log(filter)
+//     console.log("S:" + sort)
+//     let filterQuery = {};
+//     if(filter !== null){
+//         filterQuery = {};
+//     }
+//     else {
+//         filterQuery = filter + ": 1";
+//     }
+
+//     let sortQuery = {};
+//     if(sort === null){
+//         console.log("S")
+//         sortQuery = {votes: -1};
+        
+//     } else {
+        
+//     }
+//     console.log(filterQuery)
+
+//     //const sortQuery = {votes: -1};
+//     let n = 2 * 5;
+//     /*.skip(n).limit(5)*/
+//     const projectionQuery = { _id: 1, normalized_id: 1, name: 1, year: 1, runtime: 1, rating: 1, description: 1, votes: 1, director: 1, star: 1};
+//     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(10000).toArray();
+//     //console.log("Found/Projected Documents:", findResult);
+//     return findResult;
+// }
 /*  for search movie later
 async function getDatabase(searchName){
     const db = dbClient.db("tnm115-project");

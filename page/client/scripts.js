@@ -3,7 +3,7 @@ let jsonobject = null;
 document.addEventListener("DOMContentLoaded", async function(){
     console.log("HTML DOM tree loaded, and ready for manipulation.");
     // === YOUR FUNCTION CALL TO INITIATE THE GENERATION OF YOUR WEB PAGE SHOULD GO HERE ===
-    await getImdbDb()
+    await getImdbDb(null,null)
     
     
 });
@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", async function(){
 const serverUrl = "http://127.0.0.1:3000";
 
 //Get names/id
-async function getImdbDb(){
+async function getImdbDb(filter, sort){
         
-    const response = await fetch(serverUrl , {
+    const response = await fetch(serverUrl + "/" + filter + "/" + sort, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -115,11 +115,23 @@ function loadMovies(){
         textDir.innerHTML = "Director: " + movie.IMDb.director[0];
         divDirAct.appendChild(textDir);
         
-        const textStar = document.createElement("p");
-        textStar.className = "flexitem";
-        textStar.innerHTML = "Actors: " + movie.IMDb.star[0] + ", " + movie.IMDb.star[1];
-        divDirAct.appendChild(textStar);
-        listItem.appendChild(divDirAct);
+        
+
+        
+        if (movie.IMDb.star){
+            const textStar = document.createElement("p");
+            textStar.className = "flexitem";
+            let actorText = "Actors: ";
+
+            for(let i = 0; i < movie.IMDb.star.length && i < 2; i++){
+                actorText = actorText + movie.IMDb.star[i] + ", ";
+            }
+
+            textStar.innerHTML = actorText;
+            divDirAct.appendChild(textStar);
+            listItem.appendChild(divDirAct);
+        }
+        
 
         const textVotes = document.createElement("p");
         textVotes.innerHTML = "Votes: " + movie.IMDb.votes;
