@@ -24,10 +24,31 @@
         </form>
     </nav>
     <div>
-        <button onclick="getImdbDb()">Load bechdel movies</button>
+        <button onclick="loadMoreMovies()">Load bechdel movies</button>
     </div>
     <div>
-        <button onclick="getImdbDb(null,'year')">Sort bechdel movies</button>
+        <button onclick="getImdbDb(null,'year',100)">Sort by year</button>
+    </div>
+    <div>
+        <button onclick="getImdbDb(null,'rating',100)">Sort by rating</button>
+    </div>
+    <div>
+        <button onclick="getImdbDb(null,'bechdel',100)">Sort by bechdel</button>
+    </div>
+    <div>
+        <button onclick="getImdbDb(null,'runtime',200)">Sort by runtime</button>
+    </div>
+    <div>
+        <button onclick="getImdbDb(null,'name',100)">Sort by name</button>
+    </div>
+    <div>
+        <p>
+            <label for="artistname">Name of the artist:</label>
+            <input type="text" id="moviename" name="moviename" minlength="1" />
+        </p>
+        <p>
+            <button onclick="searchMovie()">Search artist</button>
+        </p>
     </div>
 
     <div class="bechdel-movie-container">
@@ -37,16 +58,16 @@
             <div class="score-container">
                     <div class="score-text">
                         <div class="score-item">
-                            <p>How many movies got 0:</p>
+                            <p>Number of movies got 0: </p>
                         </div>
                         <div class="score-item">
-                            <p>How many movies got 1:</p>
+                            <p>Number of movies got 1:</p>
                         </div>
                         <div class="score-item">
-                            <p>How many movies got 2:</p>
+                            <p>Number of movies got 2:</p>
                         </div>
                         <div class="score-item">
-                            <p>How many movies got 3:</p>
+                            <p>Number of movies got 3:</p>
                         </div>
                         <div class="score-item">
                             <p class="average-score">Average score:</p>
@@ -65,7 +86,7 @@
                         </div>
                     </div>
             </div>
-                <div class="check-score"><p>Check bechdel score</p></div>
+                <div class="check-score" onclick="calculate()">Check bechdel score</div>
         </div>
         <div id="target-movies">
         </div>

@@ -20,7 +20,7 @@ async function importDB(){
     const imdbDbCollection = db.collection("imdb");
 
     const beProjectionQuery = { _id: 1, normalized_imdb_id: 1, title: 1, rating: 1};
-    const imProjectionQuery = { _id: 1, normalized_id: 1, name: 1, year: 1, runtime: 1, rating: 1, description: 1, votes: 1, director: 1, star: 1};
+    const imProjectionQuery = { _id: 1, normalized_id: 1, name: 1, year: 1, runtime: 1, genre: 1,rating: 1, description: 1, votes: 1, director: 1, star: 1};
 
     const beArr = await bechDbCollection.find({}).project(beProjectionQuery).toArray();
     const imArr = await imdbDbCollection.find({}).project(imProjectionQuery).toArray();
