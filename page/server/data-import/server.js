@@ -36,11 +36,16 @@ const server = http.createServer(async (req, res) => {
             if (pathComponents[1] == "null"){
                 pathComponents[1] = null;
             } 
-            if (pathComponents[2] == "null"){
-                pathComponents[2] = null
+            if (pathComponents[3] == "null"){
+                pathComponents[3] = null
             }
-
-            db = await getDatabase(pathComponents[1], pathComponents[2],parseInt(pathComponents[3]));
+            let filter = [];
+            console.log(pathComponents[4]);
+            for(let i = 3; i < pathComponents.length; i++){
+                filter.push(pathComponents[i]);
+            }
+            console.log(filter);
+            db = await getDatabase(pathComponents[1], filter,parseInt(pathComponents[2]));
             sendResponse(res, 200, "application/json", JSON.stringify(db));
         }    
 
@@ -158,7 +163,7 @@ async function getDatabaseId(searchID){
 }
 
 // Function to recive movies from the database based on filter, sort and limit
-async function getDatabase(filter, sort, limit){
+async function getDatabase(sort, filter, limit){
     const db = dbClient.db("tnm115-project");
     const dbCollection = db.collection("movieDb");
 
@@ -167,17 +172,25 @@ async function getDatabase(filter, sort, limit){
 
     let filterQuery = {};
 
-    //Still under progress
-    /*if(filter == null){
+    year = 1000;
+    
+    if(filter[0] == null){
         filterQuery = {};
     }
     else {
-        filterQuery = [filter] + ": 1";
-    }*/
+        if (filter[0] === ""){
+        filter[0] = 0;
+        }
+        if (filter[1] === ""){
+        filter[1] = 2025;
+        }
+
+        filterQuery = {"IMDb.year": {$gt: parseInt(filter[0]), $lt: parseInt(filter[1])}};
+
+    }
 
     let sortQuery = {};
     if(sort == null){
-        console.log("S")
         sortQuery = {"IMDb.votes": -1} ;
         
     }else if(sort == "bechdel"){
@@ -191,7 +204,7 @@ async function getDatabase(filter, sort, limit){
     console.log(sortQuery)
     const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1};
     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(limit).toArray();
-    console.log("Found/Projected Documents:", findResult);
+    console.log(findResult);
     return findResult;
 }
 
