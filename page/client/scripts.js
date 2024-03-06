@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     
 });
 
-const serverUrl = "http://127.0.0.1:3000";
+const serverUrl = "http://127.0.0.1:3001";
 let moviesLoaded = 0;
 
 // Function to get movies from IMDb database
@@ -116,7 +116,8 @@ function loadMovies(){
         divMovieBox.id = movie.IMDb._id;
         divMovieBox.className = "movie-box";
         divMovieBox.onclick = function(){
-            window.location.href = "movieInfo.html";
+            window.location.href = "movieInfo.html?movie=" + divMovieBox.id;
+
         }
         
         const listItem = document.createElement("li");

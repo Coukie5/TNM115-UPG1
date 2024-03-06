@@ -12,7 +12,7 @@ const dbClient = new MongoClient(dbServerUrl);
 
 // initialization of server properties
 const hostname = "127.0.0.1";
-const port = 3000;
+const port = 3001;
 const serverUrl = "http://" + hostname + ":" + port + "";
 
 // initialization of server object
@@ -26,6 +26,10 @@ const server = http.createServer(async (req, res) => {
         if(pathComponents[1] === "search"){
             const searchPara = decodeURIComponent(pathComponents[2]);
             const dbMovie = await getDatabaseSearch(searchPara);
+            routing_data(res, JSON.stringify(dbMovie));
+        }else if (pathComponents[1] === "id"){
+            const idPara = decodeURIComponent(pathComponents[2]);
+            const dbMovie = await getDatabaseId(idPara);
             routing_data(res, JSON.stringify(dbMovie));
         }else{
             let db;
@@ -127,6 +131,25 @@ async function getDatabaseSearch(searchName){
     // 'i' ensures that the search is case-insensitive, matching both uppercase and lowercase letters
     const filterQuery = {"IMDb.name": { $regex: new RegExp(searchName, 'i') }};
     const sortQuery = {name: 1};
+    const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1};
+    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
+    console.log("Found/Projected Documents:", findResult);
+
+    return findResult;
+}
+
+async function getDatabaseId(searchID){
+    
+    const db = dbClient.db("tnm115-project");
+    const dbCollection = db.collection("movieDb");  
+
+    console.log(searchID)
+
+    // '$regex' operator in MongoDB is used to search for specific strings in the collection
+    // 'new RegExp' object is used for matching text with a pattern.
+    // 'i' ensures that the search is case-insensitive, matching both uppercase and lowercase letters
+    const filterQuery = {"IMDb._id": { $regex: new RegExp(searchID, 'i') }};
+    const sortQuery = {_id: 1};
     const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1};
     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
     console.log("Found/Projected Documents:", findResult);
