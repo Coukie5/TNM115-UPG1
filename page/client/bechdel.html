@@ -23,23 +23,34 @@
             </div>
         </form>
     </nav>
+
     <div>
         <button onclick="loadMoreMovies()">Load bechdel movies</button>
     </div>
     <div>
-        <button onclick="getImdbDb(null,'year',100)">Sort by year</button>
+        <button onclick="getImdbDb(true,'year',100)">Sort by year</button>
     </div>
     <div>
-        <button onclick="getImdbDb(null,'rating',100)">Sort by rating</button>
+        <button onclick="getImdbDb(true,'rating',100)">Sort by rating</button>
     </div>
     <div>
-        <button onclick="getImdbDb(null,'bechdel',100)">Sort by bechdel</button>
+        <button onclick="getImdbDb(true,'bechdel',100)">Sort by bechdel</button>
     </div>
     <div>
-        <button onclick="getImdbDb(null,'runtime',200)">Sort by runtime</button>
+        <button onclick="getImdbDb(true,'runtime',200)">Sort by runtime</button>
     </div>
     <div>
-        <button onclick="getImdbDb(null,'name',100)">Sort by name</button>
+        <button onclick="getImdbDb(true,'name',100)">Sort by name</button>
+    </div>
+
+    <div>
+        <button onclick="getImdbDb(true,null,100)">Filter by (action between 1990, 2000)</button>
+        <label class="from-year-label">From: </label>
+        <input type="text" id="from-year-bar" value="">
+        <label class="to-year-label">To: </label>
+        <input type="text" id="to-year-bar" value="">
+        <label for="action-radio" class="radio-genre-label"></label>
+        <input type="radio" name="action-radio" value="Action" class="radio-genre-button">
     </div>
     <div>
         <p>

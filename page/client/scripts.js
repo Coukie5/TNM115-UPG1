@@ -13,7 +13,31 @@ let moviesLoaded = 0;
 
 // Function to get movies from IMDb database
 async function getImdbDb(filter, sort, limit){
-    const response = await fetch(serverUrl + "/" + filter + "/" + sort + "/" + limit, {
+    let filterUrl = null;
+
+    if (filter === true){
+        try{
+            const fromYear = document.getElementById("from-year-bar").value;
+            const toYear = document.getElementById("to-year-bar").value;
+            //const radioButtons = document.getElementsByClassName("radio-genre-button");
+            console.log(fromYear);
+            console.log(toYear);
+            filterUrl = "" + fromYear + "/" + toYear;
+            console.log(filterUrl);
+
+            // for(let i = 0; i < radioButtons.length; i++){
+            //     if (radioButtons[i].checked){
+            //         filterUrl = filterUrl + "/" + radioButtons[i].value;
+            //     }
+            // }
+
+        }
+        catch(err){
+            console.log(err);
+        }
+    } 
+
+    const response = await fetch(serverUrl + "/" + sort + "/" + limit + "/" + filterUrl , {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
