@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", async function(){
 
     await getMoviesDbId(param);
     
-    
 });
 
 const serverUrl = "http://127.0.0.1:3001";
@@ -126,6 +125,32 @@ function loadMovieInfo() {
 
     const listCriteria = document.createElement("ul");
     listCriteria.className = "list-criteria";
+    if(jsonobject[0].bechdel == 1){
+        const itemCriteria1 = document.createElement("li");
+        itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
+        listCriteria.appendChild(itemCriteria1);
+        const itemCriteria2 = document.createElement("li");
+        itemCriteria2.style.textDecoration = "line-through";
+        itemCriteria2.innerHTML = "These characters must have a conversation with each other.";
+        listCriteria.appendChild(itemCriteria2);
+        const itemCriteria3 = document.createElement("li");
+        itemCriteria3.style.textDecoration = "line-through";
+        itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
+        listCriteria.appendChild(itemCriteria3);
+    }
+    if(jsonobject[0].bechdel == 2){
+        const itemCriteria1 = document.createElement("li");
+        itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
+        listCriteria.appendChild(itemCriteria1);
+        const itemCriteria2 = document.createElement("li");
+        itemCriteria2.innerHTML = "These characters must have a conversation with each other.";
+        listCriteria.appendChild(itemCriteria2);
+        const itemCriteria3 = document.createElement("li");
+        itemCriteria3.style.textDecoration = "line-through";
+        itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
+        listCriteria.appendChild(itemCriteria3);
+    }
+    if(jsonobject[0].bechdel == 3){
         const itemCriteria1 = document.createElement("li");
         itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
         listCriteria.appendChild(itemCriteria1);
@@ -135,6 +160,22 @@ function loadMovieInfo() {
         const itemCriteria3 = document.createElement("li");
         itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
         listCriteria.appendChild(itemCriteria3);
+    }else{
+        const itemCriteria1 = document.createElement("li");
+        itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
+        itemCriteria1.style.textDecoration = "line-through";
+        listCriteria.appendChild(itemCriteria1);
+        const itemCriteria2 = document.createElement("li");
+        itemCriteria2.style.textDecoration = "line-through";
+        itemCriteria2.innerHTML = "These characters must have a conversation with each other.";
+        listCriteria.appendChild(itemCriteria2);
+        const itemCriteria3 = document.createElement("li");
+        itemCriteria3.style.textDecoration = "line-through";
+        itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
+        listCriteria.appendChild(itemCriteria3);
+    }
+
+    divBechdelBox.appendChild(listCriteria);
     
     divContainer.appendChild(divBechdelBox);
         console.log(divContainer)
