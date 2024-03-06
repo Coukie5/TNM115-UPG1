@@ -196,13 +196,16 @@ async function getDatabase(sort, filter, limit){
     }else if(sort == "bechdel"){
         sortQuery = {bechdel: -1};
     } 
+    else if(sort == "runtimeValue"){
+        sortQuery = {runtimeValue: -1};
+    }
     else {
         const s = "IMDb." + sort;
         sortQuery = {[s] : -1};
     }
     console.log(filterQuery)
     console.log(sortQuery)
-    const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1};
+    const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1, runtimeValue: 1};
     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(limit).toArray();
     console.log(findResult);
     return findResult;

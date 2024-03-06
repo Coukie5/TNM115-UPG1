@@ -41,7 +41,13 @@ function calc(be, im){
     for(let i = 0; i < im.length; i++){
         for(let j = 0; j < be.length; j++){
             if(im[i].normalized_id === be[j].normalized_imdb_id){
-                Array.push({IMDb: im[i], bechdel: be[j].rating});
+                if(im[i].runtime){
+                    let pathComponents = (im[i].runtime).split(" ");
+                    Array.push({IMDb: im[i], bechdel: be[j].rating, runtimeValue: parseInt(pathComponents[0], 10)});
+                }else{
+                    Array.push({IMDb: im[i], bechdel: be[j].rating});
+                    console.log(im[i]);
+                }
             }
         }
     }  

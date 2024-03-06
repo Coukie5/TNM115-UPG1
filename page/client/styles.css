@@ -328,6 +328,10 @@ footer {
     width: 50%;
 }
 
+#target-Infomovies {
+    width: 100%;
+}
+
 .movies-container ol {
     display: flex;
     flex-direction: column;

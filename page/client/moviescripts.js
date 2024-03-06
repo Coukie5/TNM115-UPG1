@@ -56,23 +56,31 @@ function loadMovieInfo() {
         divContainer.appendChild(divMovieBox);
 
 
-    //Info: IMDb, Duration, Year
-        const divMovieInfo = document.createElement("div");
-        divMovieInfo.className = "movieInfo-Data-item";
+        //Info: IMDb, Duration, Year
+        const divMovieInfoCon = document.createElement("div");
+        divMovieInfoCon.className = "movieInfo-Data-container";
 
+        const divMovieInfo1 = document.createElement("div");
+        divMovieInfo1.className = "movieInfo-Data-item";
         const textIMDb = document.createElement("p");
         textIMDb.innerHTML = "IMDb: " + jsonobject[0].IMDb.rating;
-        divMovieInfo.appendChild(textIMDb);
-
+        divMovieInfo1.appendChild(textIMDb);
+        divMovieInfoCon.appendChild(divMovieInfo1);
+        
+        const divMovieInfo2 = document.createElement("div");
+        divMovieInfo2.className = "movieInfo-Data-item";
         const textRuntime = document.createElement("p");
         textRuntime.innerHTML = "Duration: " + jsonobject[0].IMDb.runtime;
-        divMovieInfo.appendChild(textRuntime);
+        divMovieInfo2.appendChild(textRuntime);
+        divMovieInfoCon.appendChild(divMovieInfo2);
 
+        const divMovieInfo3 = document.createElement("div");
+        divMovieInfo3.className = "movieInfo-Data-item";
         const textYear = document.createElement("p");
         textYear.innerHTML = "Year :" + jsonobject[0].IMDb.year;
-        divMovieInfo.appendChild(textYear);
-
-        divContainer.appendChild(divMovieInfo);
+        divMovieInfo3.appendChild(textYear);
+        divMovieInfoCon.appendChild(divMovieInfo3);
+        divContainer.appendChild(divMovieInfoCon);
 
 
     //Description
@@ -104,6 +112,7 @@ function loadMovieInfo() {
 
     const movieLink = document.createElement("a");
     movieLink.target="_blank";
+    movieLink.href = "https://www.imdb.com/title/" + jsonobject[0].IMDb._id;
     movieLink.innerHTML = "https://www.imdb.com/title/" + jsonobject[0].IMDb._id;
     divMovieLink.appendChild(movieLink);
     divContainer.appendChild(divMovieLink);
@@ -138,7 +147,7 @@ function loadMovieInfo() {
         itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
         listCriteria.appendChild(itemCriteria3);
     }
-    if(jsonobject[0].bechdel == 2){
+    else if(jsonobject[0].bechdel == 2){
         const itemCriteria1 = document.createElement("li");
         itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
         listCriteria.appendChild(itemCriteria1);
@@ -150,7 +159,7 @@ function loadMovieInfo() {
         itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
         listCriteria.appendChild(itemCriteria3);
     }
-    if(jsonobject[0].bechdel == 3){
+    else if(jsonobject[0].bechdel == 3){
         const itemCriteria1 = document.createElement("li");
         itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
         listCriteria.appendChild(itemCriteria1);
@@ -179,6 +188,6 @@ function loadMovieInfo() {
     
     divContainer.appendChild(divBechdelBox);
         console.log(divContainer)
-    const target = document.getElementById("target-movies")
+    const target = document.getElementById("target-Infomovies")
     target.appendChild(divContainer);
 }
