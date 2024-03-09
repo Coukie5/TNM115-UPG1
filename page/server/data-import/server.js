@@ -199,7 +199,7 @@ async function getDatabase(sort, filter, limit){
         filter[1] = 2025;
         }
 
-        filterQuery = {"IMDb.year": {$gt: parseInt(filter[0]), $lt: parseInt(filter[1])}};
+        filterQuery = {"IMDb.year": {$gte: parseInt(filter[0]), $lte: parseInt(filter[1])}};
 
     }
 
