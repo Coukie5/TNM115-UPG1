@@ -25,8 +25,16 @@ async function getMoviesDbId(search){
             console.log("The client request to the server was successful.");
             jsonobject = jsonBody;
             loadMovieInfo();
+            const bgImg = document.querySelector("#target-Infomovies");
+            let img = new Image();
+            img.src = "../MoviePosterDataBase/MoviePosterDataBase/" + jsonobject[0].IMDb._id + ".png";
+            img.onerror = function() {
+                bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%), url(../media/thegod.jpg)";
+            }
+            img.onload = function() {
+                bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 100%),url(" + img.src + ")";
+            }
         });
-        
         
     }else{
         console.log("The client request tot the server was unsuccessful.");
@@ -45,57 +53,57 @@ function loadMovieInfo() {
 
     console.log(jsonobject)
     // Header
-        const divMovieBox = document.createElement("div");
-        divMovieBox.className = "movieInfo-header";
+    const divMovieBox = document.createElement("div");
+    divMovieBox.className = "movieInfo-header";
 
-        console.log(jsonobject[0].bechdel)
-        const textElement = document.createElement("h1");
-        textElement.innerHTML = jsonobject[0].IMDb.name;
-        
-        divMovieBox.appendChild(textElement);
-        divContainer.appendChild(divMovieBox);
+    console.log(jsonobject[0].bechdel)
+    const textElement = document.createElement("h1");
+    textElement.innerHTML = jsonobject[0].IMDb.name;
+    
+    divMovieBox.appendChild(textElement);
+    divContainer.appendChild(divMovieBox);
 
 
-        //Info: IMDb, Duration, Year
-        const divMovieInfoCon = document.createElement("div");
-        divMovieInfoCon.className = "movieInfo-Data-container";
+    //Info: IMDb, Duration, Year
+    const divMovieInfoCon = document.createElement("div");
+    divMovieInfoCon.className = "movieInfo-Data-container";
 
-        const divMovieInfo1 = document.createElement("div");
-        divMovieInfo1.className = "movieInfo-Data-item";
-        const textIMDb = document.createElement("p");
-        textIMDb.innerHTML = "IMDb: " + jsonobject[0].IMDb.rating;
-        divMovieInfo1.appendChild(textIMDb);
-        divMovieInfoCon.appendChild(divMovieInfo1);
-        
-        const divMovieInfo2 = document.createElement("div");
-        divMovieInfo2.className = "movieInfo-Data-item";
-        const textRuntime = document.createElement("p");
-        textRuntime.innerHTML = "Duration: " + jsonobject[0].IMDb.runtime;
-        divMovieInfo2.appendChild(textRuntime);
-        divMovieInfoCon.appendChild(divMovieInfo2);
+    const divMovieInfo1 = document.createElement("div");
+    divMovieInfo1.className = "movieInfo-Data-item";
+    const textIMDb = document.createElement("p");
+    textIMDb.innerHTML = "IMDb: " + jsonobject[0].IMDb.rating;
+    divMovieInfo1.appendChild(textIMDb);
+    divMovieInfoCon.appendChild(divMovieInfo1);
+    
+    const divMovieInfo2 = document.createElement("div");
+    divMovieInfo2.className = "movieInfo-Data-item";
+    const textRuntime = document.createElement("p");
+    textRuntime.innerHTML = "Duration: " + jsonobject[0].IMDb.runtime;
+    divMovieInfo2.appendChild(textRuntime);
+    divMovieInfoCon.appendChild(divMovieInfo2);
 
-        const divMovieInfo3 = document.createElement("div");
-        divMovieInfo3.className = "movieInfo-Data-item";
-        const textYear = document.createElement("p");
-        textYear.innerHTML = "Year :" + jsonobject[0].IMDb.year;
-        divMovieInfo3.appendChild(textYear);
-        divMovieInfoCon.appendChild(divMovieInfo3);
-        divContainer.appendChild(divMovieInfoCon);
+    const divMovieInfo3 = document.createElement("div");
+    divMovieInfo3.className = "movieInfo-Data-item";
+    const textYear = document.createElement("p");
+    textYear.innerHTML = "Year :" + jsonobject[0].IMDb.year;
+    divMovieInfo3.appendChild(textYear);
+    divMovieInfoCon.appendChild(divMovieInfo3);
+    divContainer.appendChild(divMovieInfoCon);
 
 
     //Description
-        const divMovieDesc = document.createElement("div");
-        divMovieDesc.className = "movieInfo-Desc";
+    const divMovieDesc = document.createElement("div");
+    divMovieDesc.className = "movieInfo-Desc";
 
-        const textDesc = document.createElement("p");
-        textDesc.innerHTML = jsonobject[0].IMDb.description;
-        divMovieDesc.appendChild(textDesc);
+    const textDesc = document.createElement("p");
+    textDesc.innerHTML = jsonobject[0].IMDb.description;
+    divMovieDesc.appendChild(textDesc);
 
-        divContainer.appendChild(divMovieDesc);
+    divContainer.appendChild(divMovieDesc);
     
     //Genre
-        const divMovieGenre = document.createElement("div");
-        divMovieGenre.className = "movieInfo-genre";
+    const divMovieGenre = document.createElement("div");
+    divMovieGenre.className = "movieInfo-genre";
 
     const listElement = document.createElement("ul");
     jsonobject[0].IMDb.genre.forEach(function(genre) {
@@ -134,60 +142,24 @@ function loadMovieInfo() {
 
     const listCriteria = document.createElement("ul");
     listCriteria.className = "list-criteria";
-    if(jsonobject[0].bechdel == 1){
-        const itemCriteria1 = document.createElement("li");
-        itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
-        listCriteria.appendChild(itemCriteria1);
-        const itemCriteria2 = document.createElement("li");
-        itemCriteria2.style.textDecoration = "line-through";
-        itemCriteria2.innerHTML = "These characters must have a conversation with each other.";
-        listCriteria.appendChild(itemCriteria2);
-        const itemCriteria3 = document.createElement("li");
-        itemCriteria3.style.textDecoration = "line-through";
-        itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
-        listCriteria.appendChild(itemCriteria3);
-    }
-    else if(jsonobject[0].bechdel == 2){
-        const itemCriteria1 = document.createElement("li");
-        itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
-        listCriteria.appendChild(itemCriteria1);
-        const itemCriteria2 = document.createElement("li");
-        itemCriteria2.innerHTML = "These characters must have a conversation with each other.";
-        listCriteria.appendChild(itemCriteria2);
-        const itemCriteria3 = document.createElement("li");
-        itemCriteria3.style.textDecoration = "line-through";
-        itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
-        listCriteria.appendChild(itemCriteria3);
-    }
-    else if(jsonobject[0].bechdel == 3){
-        const itemCriteria1 = document.createElement("li");
-        itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
-        listCriteria.appendChild(itemCriteria1);
-        const itemCriteria2 = document.createElement("li");
-        itemCriteria2.innerHTML = "These characters must have a conversation with each other.";
-        listCriteria.appendChild(itemCriteria2);
-        const itemCriteria3 = document.createElement("li");
-        itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
-        listCriteria.appendChild(itemCriteria3);
-    }else{
-        const itemCriteria1 = document.createElement("li");
-        itemCriteria1.innerHTML = "The movie must feature at least two named female characters.";
-        itemCriteria1.style.textDecoration = "line-through";
-        listCriteria.appendChild(itemCriteria1);
-        const itemCriteria2 = document.createElement("li");
-        itemCriteria2.style.textDecoration = "line-through";
-        itemCriteria2.innerHTML = "These characters must have a conversation with each other.";
-        listCriteria.appendChild(itemCriteria2);
-        const itemCriteria3 = document.createElement("li");
-        itemCriteria3.style.textDecoration = "line-through";
-        itemCriteria3.innerHTML = "The conversation must be about something other than a man.";
-        listCriteria.appendChild(itemCriteria3);
-    }
 
+    const criteria = [
+        "The movie must feature at least two named female characters.",
+        "These characters must have a conversation with each other.",
+        "The conversation must be about something other than a man."
+    ];
+
+    for(let i = 0; i < 3; i++){
+        const itemCriteria = document.createElement("li");
+        itemCriteria.innerHTML = criteria[i];
+        if(i >= jsonobject[0].bechdel){
+            itemCriteria.style.textDecoration = "line-through";
+        }
+        listCriteria.appendChild(itemCriteria);
+    }
     divBechdelBox.appendChild(listCriteria);
     
     divContainer.appendChild(divBechdelBox);
-        console.log(divContainer)
     const target = document.getElementById("target-Infomovies")
     target.appendChild(divContainer);
 }

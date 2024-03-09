@@ -24,42 +24,44 @@
         </form>
     </nav>
 
-    <div>
-        <button onclick="loadMoreMovies()">Load bechdel movies</button>
-    </div>
-    <div>
-        <button onclick="getImdbDb(true,'year',100)">Sort by year</button>
-    </div>
-    <div>
-        <button onclick="getImdbDb(true,'rating',100)">Sort by rating</button>
-    </div>
-    <div>
-        <button onclick="getImdbDb(true,'bechdel',100)">Sort by bechdel</button>
-    </div>
-    <div>
-        <button onclick="getImdbDb(true,'runtimeValue',200)">Sort by runtime</button>
-    </div>
-    <div>
-        <button onclick="getImdbDb(true,'name',100)">Sort by name</button>
-    </div>
+    <div class="div-topsort-container">
+        <div>
+            <h2 style="color: white;">
+                <label for="moviename">Name of the movie:</label>
+                <input type="text" id="moviename" name="moviename" minlength="1">
+            </h2>
+            <p>
+                <button onclick="searchMovie()">Search movie</button>
+            </p>
+        </div>
 
-    <div>
-        <button onclick="getImdbDb(true,null,100)">Filter by (action between 1990, 2000)</button>
-        <label class="from-year-label">From: </label>
-        <input type="text" id="from-year-bar" value="">
-        <label class="to-year-label">To: </label>
-        <input type="text" id="to-year-bar" value="">
-        <label for="action-radio" class="radio-genre-label">Action</label>
-        <input type="radio" name="action-radio" value="Action" class="radio-genre-button">
-    </div>
-    <div>
-        <p>
-            <label for="moviename">Name of the movie:</label>
-            <input type="text" id="moviename" name="moviename" minlength="1" />
-        </p>
-        <p>
-            <button onclick="searchMovie()">Search movie</button>
-        </p>
+        <div>
+            <button onclick="loadMoreMovies()">Load bechdel movies</button>
+        </div>
+        <div>
+            <label class="sort-text">Sort by:</label>
+            <select class="sortMenu" id="sortOptions" onchange="sortBy()">
+                <option value="votes">Popularity</option>
+                <option value="name">Name</option>
+                <option value="rating">Rating</option>
+                <option value="runtime">Runtime</option>
+                <option value="bechdel">Bechdel</option>
+                <option value="year">Year</option>
+            </select>
+        </div>
+
+        <div>
+            <button onclick="getImdbDb(true,null,100)">Filter by (action between 1990, 2000)</button>
+            <label class="from-year-label">From: </label>
+            <input type="text" id="from-year-bar" value="">
+            <label class="to-year-label">To: </label>
+            <input type="text" id="to-year-bar" value="">
+            <!--<label for="action-radio" class="radio-genre-label">Action</label>
+            <input type="radio" name="action-radio" value="Action" class="radio-genre-button">-->
+            <button onclick="generateGenreBoxes()">Genre</button> 
+            <div id="genres"></div>    
+        </div>
+        
     </div>
 
     <div class="bechdel-movie-container">
@@ -67,44 +69,41 @@
             <h3 class="h3-criteria">Bechdel test result</h3>
             <h4 class="h3-criteria">Based on sorted movies</h4>
             <div class="score-container">
-                    <div class="score-text">
-                        <div class="score-item">
-                            <p>Number of movies got 0: </p>
-                        </div>
-                        <div class="score-item">
-                            <p>Number of movies got 1:</p>
-                        </div>
-                        <div class="score-item">
-                            <p>Number of movies got 2:</p>
-                        </div>
-                        <div class="score-item">
-                            <p>Number of movies got 3:</p>
-                        </div>
-                        <div class="score-item">
-                            <p class="average-score">Average score:</p>
-                        </div>
+                <div class="score-text">
+                    <div class="score-item">
+                        <p>Number of movies got 0: </p>
                     </div>
-                    <div class="score-result-container">
-                        <div class="score-result">
-                        </div>
-                        <div class="score-result">
-                        </div>
-                        <div class="score-result">
-                        </div>
-                        <div class="score-result">
-                        </div>
-                        <div class="score-result">
-                        </div>
+                    <div class="score-item">
+                        <p>Number of movies got 1:</p>
                     </div>
+                    <div class="score-item">
+                        <p>Number of movies got 2:</p>
+                    </div>
+                    <div class="score-item">
+                        <p>Number of movies got 3:</p>
+                    </div>
+                    <div class="score-item">
+                        <p class="average-score">Average score:</p>
+                    </div>
+                </div>
+                <div class="score-result-container">
+                    <div id="score-result0" class="score-result">
+                    </div>
+                    <div id="score-result1" class="score-result">
+                    </div>
+                    <div id="score-result2" class="score-result">
+                    </div>
+                    <div id="score-result3" class="score-result">
+                    </div>
+                    <div id="score-result-average" class="score-result">
+                    </div>
+                </div>
             </div>
-                <div class="check-score" onclick="calculate()">Check bechdel score</div>
+            <div class="check-score" onclick="calculate()">Check bechdel score</div>
         </div>
-        <div id="target-movies">
-        </div>
+        <div id="target-movies"></div>
     </div>
         
-    
-
     <footer>
         <div class="footer-container">
             <div class="footer-title">

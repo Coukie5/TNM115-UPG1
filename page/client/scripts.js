@@ -3,8 +3,8 @@ let jsonobject = null;
 document.addEventListener("DOMContentLoaded", async function(){
     console.log("HTML DOM tree loaded, and ready for manipulation.");
     // === YOUR FUNCTION CALL TO INITIATE THE GENERATION OF YOUR WEB PAGE SHOULD GO HERE ===
+    //generateGenreBoxes();
     await getImdbDb(null,null,100)
-    
     
 });
 
@@ -143,10 +143,8 @@ function loadMovies(){
             window.location.href = "movieInfo.html?movie=" + divMovieBox.id;
 
         }
-        
         const listItem = document.createElement("li");
 
-        console.log(movie.bechdel)
         const textElement = document.createElement("h2");
         textElement.innerHTML = movie.IMDb.name;
         
@@ -246,10 +244,74 @@ function calculate(){
     });
     
     average = sum/jsonobject.length;
+
+    document.getElementById('score-result0').innerText = zero;
+    document.getElementById('score-result1').innerText = one;
+    document.getElementById('score-result2').innerText = two;
+    document.getElementById('score-result3').innerText = three;
+    document.getElementById('score-result-average').innerText = average.toFixed(2);
+}
+
+function sortBy() {
+    var sortBy = document.getElementById("sortOptions").value;
+    switch (sortBy) {
+    case 'votes':
+        getImdbDb(true, 'votes', 100);
+        break;
+      case 'name':
+        getImdbDb(true, 'name', 100);
+        break;
+      case 'rating':
+        getImdbDb(true, 'rating', 100);
+        break;
+      case 'runtime':
+        getImdbDb(true, 'runtimeValue', 200);
+        break;
+      case 'bechdel':
+        getImdbDb(true, 'bechdel', 100);
+        break;
+      case 'year':
+        getImdbDb(true, 'year', 100);
+        break;
+      default:
+        break;
+    }
+}
+
+const genres = ['Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime', 'Drama', 
+                'Family', 'Fantasy', 'Film-Noir', 'History', 'Horror', 'Music', 'Musical', 'Mystery',
+                'Romance', 'Sci-Fi', 'Sport', 'Thriller', 'War', 'Western'];
+let checkGenre = false;
+function generateGenreBoxes() {
+    let genresDiv = document.getElementById("genres");
+
+
+    if(genresDiv.style.display === "block"){
+        genresDiv.style.display = "none";
+    }
+    else{
+        genresDiv.style.display = "block";
+        genresDiv.innerHTML = '';
+        
+        genres.forEach(genre => {
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.name = 'genre-checkbox';
+        input.value = genre;
+        input.className = 'checkbox-genre-button';
+        
+        const label = document.createElement('label');
+        label.textContent = genre;
+        label.htmlFor = input.name;
+        label.className= 'checkbox-genre-label';
+        
+        const checkboxDiv = document.createElement('div');
+        checkboxDiv.appendChild(input);
+        checkboxDiv.appendChild(label);
+
+        genresDiv.appendChild(checkboxDiv);
+    });
+    checkGenre = true;
+    }
     
-    console.log("Average Bechdel score:", average);
-    console.log("Number of movies with Bechdel score 0:", zero);
-    console.log("Number of movies with Bechdel score 1:", one);
-    console.log("Number of movies with Bechdel score 2:", two);
-    console.log("Number of movies with Bechdel score 3:", three);
 }

@@ -31,6 +31,9 @@ const server = http.createServer(async (req, res) => {
             const idPara = decodeURIComponent(pathComponents[2]);
             const dbMovie = await getDatabaseId(idPara);
             routing_data(res, JSON.stringify(dbMovie));
+        }else if(pathComponents[1] === "random"){
+            const dbMovie = await getDatabaseRandom(parseInt(pathComponents[2]));
+            sendResponse(res, 200, "application/json", JSON.stringify(dbMovie));
         }else{
             let db;
             if (pathComponents[1] == "null"){
@@ -162,6 +165,17 @@ async function getDatabaseId(searchID){
     return findResult;
 }
 
+async function getDatabaseRandom(random){
+    const db = dbClient.db("tnm115-project");
+    const dbCollection = db.collection("movieDb");
+
+    const sortQuery = {"IMDb.votes": -1};
+    const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1};
+    const findResult = await dbCollection.find().sort(sortQuery).project(projectionQuery).skip(random).limit(1).toArray();
+    console.log("Found/Projected Documents:", findResult);
+    return findResult;
+}
+
 // Function to recive movies from the database based on filter, sort and limit
 async function getDatabase(sort, filter, limit){
     const db = dbClient.db("tnm115-project");
@@ -210,28 +224,3 @@ async function getDatabase(sort, filter, limit){
     console.log(findResult);
     return findResult;
 }
-
-// async function getDbImdb(filter, sort){
-    
-//     const db = dbClient.db("tnm115-project");
-//     const dbCollection = db.collection("imdb");
-
-//     //const sortQuery = {votes: -1};
-//     let n = 2 * 5;
-//     /*.skip(n).limit(5)*/
-//     const projectionQuery = { _id: 1, normalized_id: 1, name: 1, year: 1, runtime: 1, rating: 1, description: 1, votes: 1, director: 1, star: 1};
-//     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(10000).toArray();
-//     //console.log("Found/Projected Documents:", findResult);
-//     return findResult;
-// }
-/*  for search movie later
-async function getDatabase(searchName){
-    const db = dbClient.db("tnm115-project");
-    const dbCollection = db.collection("bechdel");   
-
-    const filterQuery = {name: searchName};
-    const sortQuery = {name: 1};
-    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).toArray();
-    //console.log("Found/Projected Documents:", findResult);
-    return findResult;
-}*/

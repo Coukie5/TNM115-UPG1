@@ -120,11 +120,22 @@ nav form .search-container {
 }
 
 /* Black box */
-.black-box {
+#black-box {
     background-color: #0b0c10;
     padding: 20px;
     text-align: center;
-    
+    color: #c5c6c7;
+}
+
+#black-box h1 {
+    font-size: 40px;
+    padding-top: 20px;
+}
+
+#black-box a {
+    display: inline-block;
+    font-size: 20px;
+    padding-top: 10px;
     color: #c5c6c7;
 }
 
@@ -149,7 +160,6 @@ nav form .search-container {
 
 footer {
     background-color: #0b0c10;
-
 }
 
 .footer-container {
@@ -250,7 +260,7 @@ footer {
 
 .movieInfo-header {
     color: #c5c6c7;
-    font-size: 60px;
+    font-size: 45px;
 }
 
 .movieInfo-Data-container {
@@ -315,7 +325,6 @@ footer {
 }
 
 .body-bg {
-    background-image: url("../media/thegod.jpg");
     background-repeat: no-repeat;
     height: 100%;
     background-position: center;
@@ -325,11 +334,16 @@ footer {
 
 /* Bechdel test div movies */ 
 #target-movies {
+    margin-top: 0;
+    padding-top: 0;
     width: 50%;
 }
 
 #target-Infomovies {
     width: 100%;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: auto 100%;
 }
 
 .movies-container ol {
@@ -405,6 +419,7 @@ footer {
     background-color: #fff;
     border: 1px solid black;
     margin-top: 15px;
+    text-align: center;
 }
 
 .check-score {
@@ -417,4 +432,40 @@ footer {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+}
+
+/* top div container for bechdel site */
+.div-topsort-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* select menu */
+.sortMenu {
+    background-color: #1f2833;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.sortMenu:hover {
+    background-color: #45a29e;
+    border-radius: 5px;
+}
+
+.sort-text {
+    color: #fff;
+}
+
+/* filter div */
+#genres {
+    width: 25%;
+}
+
+#genres label {
+    color: #c5c6c7;
 }
