@@ -25,19 +25,17 @@
     </nav>
 
     <div class="div-topsort-container">
-        <div>
+        <div class="search-movie-bechdel">
             <h2 style="color: white;">
                 <label for="moviename">Name of the movie:</label>
                 <input type="text" id="moviename" name="moviename" minlength="1">
-            </h2>
-            <p>
                 <button onclick="searchMovie()">Search movie</button>
-            </p>
+            </h2>   
         </div>
 
-        <div>
+        <!--<div>
             <button onclick="loadMoreMovies()">Load bechdel movies</button>
-        </div>
+        </div>-->
         <div>
             <label class="sort-text">Sort by:</label>
             <select class="sortMenu" id="sortOptions" onchange="sortBy()">
@@ -48,18 +46,19 @@
                 <option value="bechdel">Bechdel</option>
                 <option value="year">Year</option>
             </select>
+            <button class="sort-order">Sort-Order</button>
         </div>
 
         <div>
             <button onclick="getImdbDb(true,null,100)">Filter by (action between 1990, 2000)</button>
-            <label class="from-year-label">From: </label>
+            <!--<label class="from-year-label">From: </label>
             <input type="text" id="from-year-bar" value="">
             <label class="to-year-label">To: </label>
-            <input type="text" id="to-year-bar" value="">
+            <input type="text" id="to-year-bar" value="">-->
             <!--<label for="action-radio" class="radio-genre-label">Action</label>
             <input type="radio" name="action-radio" value="Action" class="radio-genre-button">-->
-            <button onclick="generateGenreBoxes()">Genre</button> 
-            <div id="genres"></div>    
+            <button onclick="filterDiv()">Filterdiv</button> 
+            <div id="filter-box"></div>    
         </div>
         
     </div>
@@ -112,7 +111,7 @@
             <div class="footer-items">
                 <ul>
                     <li><a href="about.html">How it works</a></li>
-                    <li><a href="#">Bechdel test</a></li>
+                    <li><a href="bechdel.html">Bechdel test</a></li>
                 </ul>
             </div>
         </div>

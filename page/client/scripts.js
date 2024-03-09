@@ -36,7 +36,7 @@ async function getImdbDb(filter, sort, limit){
             console.log(err);
         }
     } 
-
+    
     const response = await fetch(serverUrl + "/" + sort + "/" + limit + "/" + filterUrl , {
         method: "GET",
         headers: {
@@ -281,37 +281,65 @@ function sortBy() {
 const genres = ['Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime', 'Drama', 
                 'Family', 'Fantasy', 'Film-Noir', 'History', 'Horror', 'Music', 'Musical', 'Mystery',
                 'Romance', 'Sci-Fi', 'Sport', 'Thriller', 'War', 'Western'];
-let checkGenre = false;
-function generateGenreBoxes() {
-    let genresDiv = document.getElementById("genres");
 
+function filterDiv() {
+    const divContainer = document.getElementById('filter-box');
+    divContainer.className = 'filter-container';
 
-    if(genresDiv.style.display === "block"){
-        genresDiv.style.display = "none";
+    if (divContainer.style.display === "block") {
+        divContainer.style.display = "none";
     }
-    else{
-        genresDiv.style.display = "block";
-        genresDiv.innerHTML = '';
-        
-        genres.forEach(genre => {
-        const input = document.createElement('input');
-        input.type = 'checkbox';
-        input.name = 'genre-checkbox';
-        input.value = genre;
-        input.className = 'checkbox-genre-button';
-        
-        const label = document.createElement('label');
-        label.textContent = genre;
-        label.htmlFor = input.name;
-        label.className= 'checkbox-genre-label';
-        
-        const checkboxDiv = document.createElement('div');
-        checkboxDiv.appendChild(input);
-        checkboxDiv.appendChild(label);
+    else {
+        divContainer.style.display = "block";
+        divContainer.innerHTML = '';
+        const divRelease = document.createElement('div');
+    divRelease.className = 'filter-release';
 
-        genresDiv.appendChild(checkboxDiv);
+    const headerRelease = document.createElement('h3');
+    headerRelease.innerHTML = 'Release year';
+    divRelease.appendChild(headerRelease);
+
+    const divYear = document.createElement('div');
+    divYear.className = 'filter-year';
+
+    const inputFrom = document.createElement('input');
+    inputFrom.type = 'text';
+    inputFrom.id = 'from-year-bar';
+    inputFrom.value = '';
+    inputFrom.placeholder = 'YYYY';
+    divYear.appendChild(inputFrom);
+
+    const labelYear = document.createElement('label');
+    labelYear.innerHTML = 'to';
+    labelYear.htmlFor = inputFrom.id;
+    divYear.appendChild(labelYear);
+
+    const inputTo = document.createElement('input');
+    inputTo.type = 'text';
+    inputTo.id = 'to-year-bar';
+    inputTo.value = '';
+    inputTo.placeholder = 'YYYY';
+    divYear.appendChild(inputTo);
+    divRelease.appendChild(divYear);
+    divContainer.appendChild(divRelease);
+
+    const divGenre = document.createElement('div');
+    divGenre.className = 'filter-genre';
+
+    const headerGenre = document.createElement('h3');
+    headerGenre.innerHTML = 'Genre';
+    divGenre.appendChild(headerGenre);
+
+    const listElement = document.createElement("ul");
+    genres.forEach(function(genre) {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = genre;
+        listItem.onclick = function(){
+            listItem.classList.toggle("selected");
+        }
+        listElement.appendChild(listItem);
     });
-    checkGenre = true;
+    divGenre.appendChild(listElement);
+    divContainer.appendChild(divGenre);
     }
-    
 }

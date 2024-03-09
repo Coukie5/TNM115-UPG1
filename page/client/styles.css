@@ -438,9 +438,24 @@ footer {
 .div-topsort-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: left;
     margin-bottom: 0;
     padding-bottom: 0;
+}
+
+.search-movie-bechdel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 2%;
+}
+
+.search-movie-bechdel input {
+    width: 200px; 
+    padding-top: 5px;
+    padding-bottom: 5px;  
+    border: none;
 }
 
 /* select menu */
@@ -457,6 +472,10 @@ footer {
     border-radius: 5px;
 }
 
+.sortMenu option {
+    background-color: #1f2833;
+}
+
 .sort-text {
     color: #fff;
 }
@@ -468,4 +487,63 @@ footer {
 
 #genres label {
     color: #c5c6c7;
+}
+
+/* filter div */
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    color: #c5c6c7;
+    border: 1px solid #c5c6c7;
+    padding: 50px 100px 50px 100px;
+    width: 50%;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    background-color: #1f2833;  
+}
+
+.filter-year input{
+    width: 200px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.filter-genre {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+}
+
+.filter-genre ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.filter-genre ul li {
+    display: flex;
+    flex-direction: column;
+    margin-right: 30px;
+    color: #c5c6c7;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid #c5c6c7;
+    border-radius: 25px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    width: 100px;
+    background-color: #1f2833;
+    cursor: pointer;
+}
+
+.filter-genre ul li:hover {
+    background-color: #1e232b; 
+    transition: background-color 0.8s ease;
+}
+
+.filter-genre ul li.selected {
+    background-color: #45a29e; 
+    transition: background-color 0.3s ease;
 }
