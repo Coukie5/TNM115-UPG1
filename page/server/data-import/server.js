@@ -199,7 +199,28 @@ async function getDatabase(sort, filter, limit){
         filter[1] = 2025;
         }
 
-        filterQuery = {"IMDb.year": {$gte: parseInt(filter[0]), $lte: parseInt(filter[1])}};
+        let genres = [];
+        console.log(filter[2]);
+        if (filter[2] != undefined) {
+            for (let i = 2; i < filter.length; i++){
+                if (filter[i]){
+                    genres.push(filter[i]);
+                }
+            }
+
+            filterQuery = {
+                "IMDb.year": {$gte: parseInt(filter[0]), $lte: parseInt(filter[1])},
+                "IMDb.genre": {$all: genres}
+            };
+        } else {
+            const allGenres = {$ne: ""};
+            filterQuery = {
+                "IMDb.year": {$gte: parseInt(filter[0]), $lte: parseInt(filter[1])},
+                "IMDb.genre": allGenres
+            };
+        }
+        
+        console.log(genres);
 
     }
 
@@ -217,10 +238,12 @@ async function getDatabase(sort, filter, limit){
         const s = "IMDb." + sort;
         sortQuery = {[s] : -1};
     }
+
     console.log(filterQuery)
     console.log(sortQuery)
+
     const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1, runtimeValue: 1};
     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).limit(limit).toArray();
-    console.log(findResult);
+    //console.log(findResult);
     return findResult;
 }

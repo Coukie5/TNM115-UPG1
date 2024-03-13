@@ -119,6 +119,8 @@ nav form .search-container {
     outline: none;
 }
 
+
+
 /* Black box */
 #black-box {
     background-color: #0b0c10;
@@ -437,8 +439,7 @@ footer {
 /* top div container for bechdel site */
 .div-topsort-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 70%;
     justify-content: left;
     margin-bottom: 0;
@@ -458,6 +459,16 @@ footer {
     padding-bottom: 5px;  
     border: none;
 }
+.div-onlysort{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 
 /* select menu */
 .sortMenu {
@@ -491,8 +502,8 @@ footer {
 }
 
 /* filter div */
-.filter-container {
-    display: flex;
+#filter-box {
+    display: none;
     flex-direction: column;
     color: #c5c6c7;
     border: 1px solid #c5c6c7;

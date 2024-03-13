@@ -12,24 +12,23 @@ const serverUrl = "http://127.0.0.1:3001";
 let moviesLoaded = 0;
 
 // Function to get movies from IMDb database
-async function getImdbDb(filter, sort, limit){
+async function getImdbDb(filterBool, sort, limit){
     let filterUrl = null;
 
-    if (filter === true){
+    if (filterBool === true){
         try{
             const fromYear = document.getElementById("from-year-bar").value;
             const toYear = document.getElementById("to-year-bar").value;
-            //const radioButtons = document.getElementsByClassName("radio-genre-button");
+            const selectedGenres = document.getElementsByClassName("selected"); 
+            
             console.log(fromYear);
             console.log(toYear);
             filterUrl = "" + fromYear + "/" + toYear;
-            console.log(filterUrl);
 
-            // for(let i = 0; i < radioButtons.length; i++){
-            //     if (radioButtons[i].checked){
-            //         filterUrl = filterUrl + "/" + radioButtons[i].value;
-            //     }
-            // }
+            for (let i = 0; i < selectedGenres.length; i++){
+                filterUrl = filterUrl + "/" + selectedGenres[i].innerHTML;
+            }
+            console.log(filterUrl);
 
         }
         catch(err){
@@ -282,7 +281,21 @@ const genres = ['Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crim
                 'Family', 'Fantasy', 'Film-Noir', 'History', 'Horror', 'Music', 'Musical', 'Mystery',
                 'Romance', 'Sci-Fi', 'Sport', 'Thriller', 'War', 'Western'];
 
+function genreSelected() {
+    const item = event.target;
+    item.classList.toggle("selected");
+}
 function filterDiv() {
+
+    const filterBox = document.getElementById("filter-box");
+    if (filterBox.style.display === "none"){
+        filterBox.style.display = "flex";
+    }
+    else {
+        filterBox.style.display = "none";
+    }
+
+/* Skrev om lite av koden så att filter-boxen redan finns från början // Felix
     const divContainer = document.getElementById('filter-box');
     divContainer.className = 'filter-container';
 
@@ -342,4 +355,5 @@ function filterDiv() {
     divGenre.appendChild(listElement);
     divContainer.appendChild(divGenre);
     }
+*/
 }
