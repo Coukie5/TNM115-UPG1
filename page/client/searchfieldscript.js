@@ -70,13 +70,40 @@ async function getMovieRandom(random){
     }
 }
 
-function loadRandomMovie(){
+const movieTrailers = {
+    'The Dark Knight': 'https://www.youtube.com/embed/LDG9bisJEaI?si=o9VZDDgP9gHkLBuY',
+    'Inception': 'https://www.youtube.com/embed/8hP9D6kZseM?si=7EGxyhLIfHsuV8km',
+    'Pulp Fiction': 'https://www.youtube.com/embed/tGpTpVyI_OQ?si=A1lUzGpq_bpr7_AB',
+    'The Matrix': 'https://www.youtube.com/embed/m8e-FF8MsqU?si=PtvzC8hcEdKKs2ww',
+    'The Lord of the Rings: The Fellowship of the Ring': 'https://www.youtube.com/embed/_nZdmwHrcnw?si=PYKq0WUFbuxR0mx_',
+    'The Godfather': 'https://www.youtube.com/embed/UaVTIH8mujA?si=PbhwXxKeLuooEC9M',
+    'The Lord of the Rings: The Return of the King': 'https://www.youtube.com/embed/zckJCxYxn1g?si=7wlpDiwbYK3zXWQD',
+    'Interstellar': 'https://www.youtube.com/embed/zSWdZVtXT7E?si=pWW2Kv9C6lFqU3vc',
+    'The Dark Knight Rises': 'https://www.youtube.com/embed/g8evyE9TuYk?si=_HLeMYih_JLayWQf',
+    'The Lord of the Rings: The Two Towers': 'https://www.youtube.com/embed/hYcw5ksV8YQ?si=TsnAVSJmAXSuLVHH'
+}
+
+
+function loadRandomMovie() {
     const div = document.getElementById("black-box");
     const header = document.createElement("h1");
     header.innerHTML = "Popular Movie";
     div.appendChild(header);
+
+    const movie = jsonobject[0].IMDb.name;
+
     const a = document.createElement("a");
     a.href = "movieInfo.html?movie=" + jsonobject[0].IMDb._id;
-    a.innerHTML = jsonobject[0].IMDb.name;
+    a.innerHTML = movie;
     div.appendChild(a);
+
+    const videoContainer = document.createElement("div");
+    videoContainer.className = "video-container";
+    div.appendChild(videoContainer);
+
+    const iframe = document.createElement("iframe");
+    iframe.src = movieTrailers[movie];
+    iframe.frameborder = "0";
+    iframe.allowfullscreen = "";
+    videoContainer.appendChild(iframe);
 }

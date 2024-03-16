@@ -127,9 +127,18 @@ function loadMovies(){
     if (container) {
         container.remove();
     }
+    
 
     const divContainer = document.createElement("div");
     divContainer.className = "movies-container";
+
+    const loadedMovies = document.createElement("div");
+    const loadText = document.createElement("p");
+    loadText.style = "font-size: 20px";
+    loadText.style = "color: white";
+    loadText.innerHTML = "Loaded " + jsonobject.length + " of 6003";
+    loadedMovies.appendChild(loadText);
+    divContainer.appendChild(loadedMovies);
 
     console.log(jsonobject)
 
@@ -286,19 +295,19 @@ function genreSelected() {
     item.classList.toggle("selected");
 }
 function filterDiv() {
-
+/*
     const filterBox = document.getElementById("filter-box");
     if (filterBox.style.display === "none"){
         filterBox.style.display = "flex";
     }
     else {
         filterBox.style.display = "none";
-    }
+    }*/
 
-/* Skrev om lite av koden så att filter-boxen redan finns från början // Felix
+//Skrev om lite av koden så att filter-boxen redan finns från början // Felix
     const divContainer = document.getElementById('filter-box');
     divContainer.className = 'filter-container';
-
+    
     if (divContainer.style.display === "block") {
         divContainer.style.display = "none";
     }
@@ -348,12 +357,12 @@ function filterDiv() {
         const listItem = document.createElement("li");
         listItem.innerHTML = genre;
         listItem.onclick = function(){
-            listItem.classList.toggle("selected");
+            //listItem.classList.toggle("selected");
+            genreSelected();
         }
         listElement.appendChild(listItem);
     });
     divGenre.appendChild(listElement);
     divContainer.appendChild(divGenre);
     }
-*/
 }
