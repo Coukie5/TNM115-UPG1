@@ -562,6 +562,23 @@ footer {
     transition: background-color 0.3s ease;
 }
 
+.filter-button {
+    width: 70px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #45a29e;
+    border: 1px solid black;
+    font-size: 15px;
+    color: #0b0c10;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.filter-button:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
 /* Searchfield box */
 #search-results {
     display: flex;
