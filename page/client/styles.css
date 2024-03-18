@@ -562,3 +562,28 @@ footer {
     background-color: #45a29e; 
     transition: background-color 0.3s ease;
 }
+
+/* Searchfield box */
+#search-results {
+    display: flex;
+    font-size: 20px;
+    flex-direction: column;
+    color: #c5c6c7;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    border-radius: 5px;
+    background-color: #1f2833;
+    align-items: center;
+    width: 35%;
+    margin: auto;
+}
+
+#search-results div{
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+#search-results div:hover {
+    background-color: #1e232b; 
+    transition: background-color 0.8s ease;
+}

@@ -31,6 +31,7 @@ async function getMoviesDbSearch(search){
             console.log("The client request to the server was successful.");
             jsonobject = jsonBody;
             console.log(jsonobject);
+            searchBox();
         });
         
         
@@ -38,6 +39,23 @@ async function getMoviesDbSearch(search){
         console.log("The client request tot the server was unsuccessful.");
         console.log(response.status + " | " + response.statusText);
     }
+}
+
+function searchBox(){
+
+    let searchResultsDiv = document.querySelector('#search-results');
+
+    searchResultsDiv.innerHTML = '';
+
+    for(let i = 0; i < 5; i++){
+    let resultDiv = document.createElement('div');
+    resultDiv.innerHTML = jsonobject[i].IMDb.name;
+    resultDiv.onclick = function(){
+        window.location.href = "movieInfo.html?movie=" + jsonobject[i].IMDb._id;
+    }
+    searchResultsDiv.appendChild(resultDiv);
+    };
+    console.log(searchResultsDiv);
 }
 
 function randomizeMovie(){
