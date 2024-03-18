@@ -3,12 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('HTML DOM tree loaded, and ready for manipulation.');
     getMovieRandom(randomizeMovie())
     let searchInput = document.querySelector('.search-data-middle');
-
     if (searchInput) {
         searchInput.addEventListener('input', function(event) {
             let inputValue = event.target.value;
             console.log(inputValue);
-            getMoviesDbSearch(inputValue);
+            if(inputValue !== ""){
+                getMoviesDbSearch(inputValue);
+            }
+            else{
+                let searchResultsDiv = document.querySelector('#search-results');
+                searchResultsDiv.innerHTML = '';
+            }
         });
     } else {
         console.log('Element with class .search-data-middle not found');
@@ -20,7 +25,7 @@ const serverUrl = "http://127.0.0.1:3001";
 // Function to find the searched movie/movies in the database
 async function getMoviesDbSearch(search){
     console.log(search)
-    const response = await fetch(serverUrl + "/search/" + search, {
+    const response = await fetch(serverUrl + "/searchMovie/" + search, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -47,7 +52,7 @@ function searchBox(){
 
     searchResultsDiv.innerHTML = '';
 
-    for(let i = 0; i < 5; i++){
+    for(let i = 0; i < 8; i++){
     let resultDiv = document.createElement('div');
     resultDiv.innerHTML = jsonobject[i].IMDb.name;
     resultDiv.onclick = function(){
@@ -121,7 +126,6 @@ function loadRandomMovie() {
 
     const iframe = document.createElement("iframe");
     iframe.src = movieTrailers[movie];
-    iframe.frameborder = "0";
-    iframe.allowfullscreen = "";
+    iframe.allowFullscreen = "0";
     videoContainer.appendChild(iframe);
 }

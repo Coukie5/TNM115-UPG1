@@ -136,7 +136,7 @@ function loadMovies(){
     const loadText = document.createElement("p");
     loadText.style = "font-size: 20px";
     loadText.style = "color: white";
-    loadText.innerHTML = "Loaded " + jsonobject.length + " of 6003";
+    loadText.innerHTML = "Loaded " + jsonobject.length + " of 6056";
     loadedMovies.appendChild(loadText);
     divContainer.appendChild(loadedMovies);
 
