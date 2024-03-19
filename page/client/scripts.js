@@ -1,10 +1,13 @@
 let jsonobject = null;
+let limit = 50;
+let skipAmount = 0;
+let numberOfMovies = 0;
 
 document.addEventListener("DOMContentLoaded", async function(){
     console.log("HTML DOM tree loaded, and ready for manipulation.");
     // === YOUR FUNCTION CALL TO INITIATE THE GENERATION OF YOUR WEB PAGE SHOULD GO HERE ===
     //generateGenreBoxes();
-    await getImdbDb(null,null,100)
+    await getImdbDb(null,limit,0)
     
 });
 
@@ -12,10 +15,10 @@ const serverUrl = "http://127.0.0.1:3001";
 let moviesLoaded = 0;
 
 // Function to get movies from IMDb database
-async function getImdbDb(filterBool, sort, limit){
+async function getImdbDb(sort, limit, skipAmount){
     let filterUrl = null;
 
-    if (filterBool === true){
+    if (document.getElementsByClassName("selected").length > 0){
         try{
             const fromYear = document.getElementById("from-year-bar").value;
             const toYear = document.getElementById("to-year-bar").value;
@@ -36,7 +39,7 @@ async function getImdbDb(filterBool, sort, limit){
         }
     } 
     
-    const response = await fetch(serverUrl + "/" + sort + "/" + limit + "/" + filterUrl , {
+    const response = await fetch(serverUrl + "/" + sort + "/" + limit + "/" + skipAmount + "/" +filterUrl , {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -46,7 +49,8 @@ async function getImdbDb(filterBool, sort, limit){
     if(response.ok){
         response.json().then((jsonBody) => {
             console.log("The client request to the server was successful.");
-            jsonobject = jsonBody;
+            jsonobject = jsonBody.data;
+            numberOfMovies = jsonBody.length;
             loadMovies();
         });
         
@@ -55,6 +59,20 @@ async function getImdbDb(filterBool, sort, limit){
         console.log("The client request tot the server was unsuccessful.");
         console.log(response.status + " | " + response.statusText);
     }
+}
+let pageNumber = 1;
+function handlePage(direction){
+    pageNumber = Number(document.getElementsByClassName("page-button")[0].id);
+    if(direction === "back" && pageNumber > 1){
+        pageNumber--;
+    }else if(direction === "next" && jsonobject.length >= limit){
+        pageNumber++;
+    }
+    console.log(pageNumber);
+    skipAmount = (pageNumber-1)*limit;
+    getImdbDb(currentSort,limit,skipAmount);
+    document.getElementsByClassName("page-button")[0].id = pageNumber;
+    
 }
 
 function loadMoreMovies() {
@@ -131,12 +149,17 @@ function loadMovies(){
 
     const divContainer = document.createElement("div");
     divContainer.className = "movies-container";
-
+    console.log(pageNumber)
     const loadedMovies = document.createElement("div");
     const loadText = document.createElement("p");
     loadText.style = "font-size: 20px";
     loadText.style = "color: white";
-    loadText.innerHTML = "Loaded " + jsonobject.length + " of 6056";
+    if(numberOfMovies > 0){
+        loadText.innerHTML = "Loaded " + parseInt((pageNumber-1)*limit+1) + " - " + parseInt((pageNumber-1)*limit + jsonobject.length) + " of " + numberOfMovies;
+    }else {
+        loadText.innerHTML = "No movies found";
+    }
+    
     loadedMovies.appendChild(loadText);
     divContainer.appendChild(loadedMovies);
 
@@ -260,26 +283,32 @@ function calculate(){
     document.getElementById('score-result-average').innerText = average.toFixed(2);
 }
 
+let currentSort = null;
+
 function sortBy() {
     var sortBy = document.getElementById("sortOptions").value;
+    currentSort = sortBy;
+    pageNumber = 1;
+    document.getElementsByClassName("page-button")[0].id = pageNumber;
+    skipAmount = 0;
     switch (sortBy) {
     case 'votes':
-        getImdbDb(true, 'votes', 100);
+        getImdbDb('votes', limit, skipAmount);
         break;
       case 'name':
-        getImdbDb(true, 'name', 100);
+        getImdbDb('name', limit, skipAmount);
         break;
       case 'rating':
-        getImdbDb(true, 'rating', 100);
+        getImdbDb('rating', limit, skipAmount);
         break;
       case 'runtime':
-        getImdbDb(true, 'runtimeValue', 200);
+        getImdbDb('runtimeValue', limit, skipAmount);
         break;
       case 'bechdel':
-        getImdbDb(true, 'bechdel', 100);
+        getImdbDb('bechdel', limit, skipAmount);
         break;
       case 'year':
-        getImdbDb(true, 'year', 100);
+        getImdbDb('year', limit, skipAmount);
         break;
       default:
         break;
@@ -293,17 +322,12 @@ const genres = ['Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crim
 function genreSelected() {
     const item = event.target;
     item.classList.toggle("selected");
-    getImdbDb(true,null,100)
+    pageNumber = 1;
+    document.getElementsByClassName("page-button")[0].id = pageNumber;
+    skipAmount = 0;
+    getImdbDb(currentSort,limit,skipAmount)
 }
 function filterDiv() {
-/*
-    const filterBox = document.getElementById("filter-box");
-    if (filterBox.style.display === "none"){
-        filterBox.style.display = "flex";
-    }
-    else {
-        filterBox.style.display = "none";
-    }*/
 
 //Skrev om lite av koden så att filter-boxen redan finns från början // Felix
     const divContainer = document.getElementById('filter-box');

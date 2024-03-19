@@ -1,9 +1,0 @@
-{
-  "name": "tnm115-project-material",
-  "version": "1.0.0",
-  "description": "Course project datasets, i.e., IMDb and Bechdel Test, for JSON Data Import to MongoDB data storage system",
-  "author": "Nico Reski, Katerina Vrotsou",
-  "dependencies": {
-    "mongodb": "6.3.0"
-  }
-}
