@@ -11,8 +11,7 @@ body {
     background: #1f2833;
     margin: 0; 
     position: relative;
-  min-height: 100vh;
-    
+    min-height: 100vh;  
 }
 
 .northen {
@@ -99,7 +98,7 @@ nav form .search-container {
     width: 250px; 
 }
 
-/* Searchfield on page */
+/* Searchfield on homepage */
 .search-container {
     display: flex;
     align-items: center;
@@ -119,9 +118,7 @@ nav form .search-container {
     outline: none;
 }
 
-
-
-/* Black box */
+/* Black box above movie trailer */
 #black-box {
     background-color: #0b0c10;
     padding: 20px;
@@ -231,7 +228,6 @@ footer {
     font-size: 20px;
     color: #c5c6c7;
     max-width: 50%;
-    
 }
 
 .bechdel-box {
@@ -292,7 +288,6 @@ footer {
     list-style: none; 
 }
 
-
 .movieInfo-genre ul li {
     display: flex;
     flex-direction: column;
@@ -328,12 +323,11 @@ footer {
     margin-bottom: 10%;
 }
 
-.body-bg {
+#target-Infomovies {
+    width: 100%;
     background-repeat: no-repeat;
-    height: 100%;
-    background-position: center;
-    background-size: cover;
-    
+    background-position: right;
+    background-size: auto 100%;
 }
 
 /* Bechdel test div movies */ 
@@ -341,13 +335,6 @@ footer {
     margin-top: 0;
     padding-top: 0;
     width: 50%;
-}
-
-#target-Infomovies {
-    width: 100%;
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: auto 100%;
 }
 
 .movies-container ol {
@@ -495,15 +482,7 @@ footer {
 }
 
 /* filter div */
-#genres {
-    width: 25%;
-}
 
-#genres label {
-    color: #c5c6c7;
-}
-
-/* filter div */
 #filter-box {
     display: none;
     flex-direction: column;

@@ -153,10 +153,12 @@ async function getDatabaseSearch(searchName){
     const filterQuery = {"IMDb.name": { $regex: new RegExp(searchName, 'i') }};
     const sortQuery = {"IMDb.votes": -1};
     const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1};
+
+    const findLength = (await dbCollection.find(filterQuery).toArray()).length;
     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
     console.log("Found/Projected Documents:", findResult);
 
-    return findResult;
+    return jsonResult = {length: findLength, data: findResult};
 }
 
 async function getDatabaseSearchMovie(searchName){

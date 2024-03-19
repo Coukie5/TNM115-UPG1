@@ -1,25 +1,23 @@
 let jsonobject = null;
-let limit = 50;
+let limit = 20;
 let skipAmount = 0;
 let numberOfMovies = 0;
 
 document.addEventListener("DOMContentLoaded", async function(){
     console.log("HTML DOM tree loaded, and ready for manipulation.");
     // === YOUR FUNCTION CALL TO INITIATE THE GENERATION OF YOUR WEB PAGE SHOULD GO HERE ===
-    //generateGenreBoxes();
-    await getImdbDb(null,limit,0)
     
+    await getImdbDb(null,limit,0)
 });
 
 const serverUrl = "http://127.0.0.1:3001";
-let moviesLoaded = 0;
 
 // Function to get movies from IMDb database
 async function getImdbDb(sort, limit, skipAmount){
     let filterUrl = null;
 
-    if (document.getElementsByClassName("selected").length > 0){
         try{
+            
             const fromYear = document.getElementById("from-year-bar").value;
             const toYear = document.getElementById("to-year-bar").value;
             const selectedGenres = document.getElementsByClassName("selected"); 
@@ -37,9 +35,9 @@ async function getImdbDb(sort, limit, skipAmount){
         catch(err){
             console.log(err);
         }
-    } 
     
-    const response = await fetch(serverUrl + "/" + sort + "/" + limit + "/" + skipAmount + "/" +filterUrl , {
+    
+    const response = await fetch(serverUrl + "/" + sort + "/" + limit + "/" + skipAmount + "/" + filterUrl , {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -73,11 +71,6 @@ function handlePage(direction){
     getImdbDb(currentSort,limit,skipAmount);
     document.getElementsByClassName("page-button")[0].id = pageNumber;
     
-}
-
-function loadMoreMovies() {
-    moviesLoaded += 100; 
-    getImdbDb(null, null, moviesLoaded + 100);
 }
 
 // Function to load more movies
@@ -128,7 +121,9 @@ async function getMoviesDbSearch(search){
     if(response.ok){
         response.json().then((jsonBody) => {
             console.log("The client request to the server was successful.");
-            jsonobject = jsonBody;
+            jsonobject = jsonBody.data;
+            numberOfMovies = jsonBody.length;
+            console.log(jsonobject.length)
             loadMovies();
         });
         
@@ -146,7 +141,6 @@ function loadMovies(){
         container.remove();
     }
     
-
     const divContainer = document.createElement("div");
     divContainer.className = "movies-container";
     console.log(pageNumber)
@@ -327,6 +321,7 @@ function genreSelected() {
     skipAmount = 0;
     getImdbDb(currentSort,limit,skipAmount)
 }
+
 function filterDiv() {
 
 //Skrev om lite av koden så att filter-boxen redan finns från början // Felix
@@ -354,6 +349,12 @@ function filterDiv() {
     inputFrom.id = 'from-year-bar';
     inputFrom.value = '';
     inputFrom.placeholder = 'YYYY';
+    inputFrom.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); 
+            getImdbDb(null, limit, 0);
+        }
+    });
     divYear.appendChild(inputFrom);
 
     const labelYear = document.createElement('label');
@@ -366,6 +367,12 @@ function filterDiv() {
     inputTo.id = 'to-year-bar';
     inputTo.value = '';
     inputTo.placeholder = 'YYYY';
+    inputTo.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            getImdbDb(null, limit, 0);
+        }
+    });
     divYear.appendChild(inputTo);
     divRelease.appendChild(divYear);
     divContainer.appendChild(divRelease);

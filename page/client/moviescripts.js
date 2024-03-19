@@ -38,21 +38,9 @@ async function getMoviesDbId(search){
                     console.log("The client request to the server was successful.");
                     jsonobject = jsonBody;
                     loadMovieInfo();
+                });
             });
-            
-        });
         }
-        
-           /* const bgImg = document.querySelector("#target-Infomovies");
-            let img = new Image();
-            img.src = URL.createObjectURL(jsonImg);
-            img.onerror = function() {
-                bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%)";
-            }
-            img.onload = function() {
-                bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 100%)";
-            }*/
-        
     }else{
         console.log("The client request tot the server was unsuccessful.");
         console.log(response.status + " | " + response.statusText);
@@ -75,7 +63,7 @@ function loadMovieInfo() {
         bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%)";
     }
     img.onload = function() {
-        bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 100%),url(" + img.src + ")";
+        bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%),url(" + img.src + ")";
     }
 
     console.log(jsonobject)
