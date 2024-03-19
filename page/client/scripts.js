@@ -293,6 +293,7 @@ const genres = ['Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crim
 function genreSelected() {
     const item = event.target;
     item.classList.toggle("selected");
+    getImdbDb(true,null,100)
 }
 function filterDiv() {
 /*
