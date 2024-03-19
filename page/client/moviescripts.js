@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async function(){
 
 let jsonImg = null;
 
-const serverUrl = "http://127.0.0.1:3001";
+
 async function getMoviesDbId(search){
     console.log(search)
     const response = await fetch(serverUrl + "/id/" + search, {

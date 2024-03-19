@@ -1,5 +1,3 @@
-
-
 const MongoClient = require("mongodb").MongoClient;
 
 //MongoDB server
@@ -25,7 +23,7 @@ async function importDB(){
     const beArr = await bechDbCollection.find({}).project(beProjectionQuery).toArray();
     const imArr = await imdbDbCollection.find({}).project(imProjectionQuery).toArray();
 
-    calc(beArr, imArr);
+    combineDB(beArr, imArr);
 
     console.log(Array.length);
     db.createCollection("movieDb");
@@ -34,7 +32,7 @@ async function importDB(){
 }
 
 
-function calc(be, im){
+function combineDB(be, im){
     Array = [];
     console.log(be.length);
     console.log(im.length)

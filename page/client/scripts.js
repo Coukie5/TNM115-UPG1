@@ -212,7 +212,12 @@ function loadMovies(){
             let actorText = "Actors: ";
 
             for(let i = 0; i < movie.IMDb.star.length && i < 2; i++){
-                actorText = actorText + movie.IMDb.star[i] + ", ";
+                if(i+1 === 2){
+                    actorText = actorText + movie.IMDb.star[i];
+                }
+                else{
+                    actorText = actorText + movie.IMDb.star[i] + ", ";
+                }
             }
 
             textStar.innerHTML = actorText;
@@ -220,7 +225,6 @@ function loadMovies(){
             listItem.appendChild(divDirAct);
         }
         
-
         const textVotes = document.createElement("p");
         textVotes.innerHTML = "Votes: " + movie.IMDb.votes;
         listItem.appendChild(textVotes);
@@ -358,7 +362,7 @@ function filterDiv() {
     divYear.appendChild(inputFrom);
 
     const labelYear = document.createElement('label');
-    labelYear.innerHTML = 'to';
+    labelYear.innerHTML = ' to ';
     labelYear.htmlFor = inputFrom.id;
     divYear.appendChild(labelYear);
 
