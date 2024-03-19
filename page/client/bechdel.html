@@ -28,11 +28,6 @@
                     <button onclick="searchMovie()">Search movie</button>
                 </h2>   
             </div>
-
-            <!--<div>
-                <button onclick="loadMoreMovies()">Load bechdel movies</button>
-            </div>-->
-
             <div>
                 <label class="sort-text">Sort by:</label>
                 <select class="sortMenu" id="sortOptions" onchange="sortBy()">
@@ -43,56 +38,15 @@
                     <option value="bechdel">Bechdel</option>
                     <option value="year">Year</option>
                 </select>
-                
                 <button class="page-button" onclick="handlePage('back')" id="1">Back</button>
                 <button class="page-button" onclick="handlePage('next')" id="1">Next</button>
             </div>
         </div>
-
         <div>
             <button onclick="getImdbDb(null,20,0)">Filter</button>
             <button class="filter-button" onclick="filterDiv()">FilterMnu</button> 
-            <div id="filter-box"></div>    
-
-            <!--<div id="filter-box" class="filter-container" style="display: none;">
-                <div class="filter-release">
-                    <h3>Release year</h3>
-                    <div class="filter-year">
-                        <input type="text" id="from-year-bar" placeholder="YYYY">
-                        <label for="from-year-bar">to</label>
-                        <input type="text" id="to-year-bar" placeholder="YYYY">
-                    </div>
-                </div>
-                
-                <div class="filter-genre">
-                    <h3>Genre</h3>
-                    <ul>
-                        <li onclick="genreSelected()">Action</li>
-                        <li onclick="genreSelected()">Adventure</li>
-                        <li onclick="genreSelected()">Animation</li>
-                        <li onclick="genreSelected()">Biography</li>
-                        <li onclick="genreSelected()">Comedy</li>
-                        <li onclick="genreSelected()">Crime</li>
-                        <li onclick="genreSelected()">Drama</li>
-                        <li onclick="genreSelected()">Family</li>
-                        <li onclick="genreSelected()">Fantasy</li>
-                        <li onclick="genreSelected()">Film-Noir</li>
-                        <li onclick="genreSelected()">History</li>
-                        <li onclick="genreSelected()">Horror</li>
-                        <li onclick="genreSelected()">Music</li>
-                        <li onclick="genreSelected()">Musical</li>
-                        <li onclick="genreSelected()">Mystery</li>
-                        <li onclick="genreSelected()">Romance</li>
-                        <li onclick="genreSelected()">Sci-Fi</li>
-                        <li onclick="genreSelected()">Sport</li>
-                        <li onclick="genreSelected()">Thriller</li>
-                        <li onclick="genreSelected()">War</li>
-                        <li onclick="genreSelected()">Western</li>
-                    </ul>
-                </div>
-            </div>-->
+            <div id="filter-box"></div>
         </div>
-        
     </div>
 
     <div class="bechdel-movie-container">

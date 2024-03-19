@@ -96,8 +96,6 @@ function sendResponse(res, statusCode, contentType, data){
 function routing_data(res, jsonString) {
     try {
         const movieJsonDataFromDb = JSON.parse(jsonString);
-        /*console.log(1, movieJsonDataFromDb);
-        console.log(movieJsonDataFromDb[0].normalized_id)*/
 
         sendResponse(res, 200, "application/json", jsonString);
 
@@ -221,10 +219,10 @@ async function getDatabase(sort, filter, limit, skipAmount){
     }
     else {
         if (filter[0] === ""){
-        filter[0] = 0;
+            filter[0] = 0;
         }
         if (filter[1] === ""){
-        filter[1] = 2025;
+            filter[1] = 2025;
         }
 
         let genres = [];
@@ -247,22 +245,17 @@ async function getDatabase(sort, filter, limit, skipAmount){
                 "IMDb.genre": allGenres
             };
         }
-        
         console.log(genres);
-
     }
 
     let sortQuery = {};
     if(sort == null){
         sortQuery = {"IMDb.votes": -1} ;
-        
     }else if(sort == "bechdel"){
         sortQuery = {bechdel: -1};
-    } 
-    else if(sort == "runtimeValue"){
+    }else if(sort == "runtimeValue"){
         sortQuery = {runtimeValue: -1};
-    }
-    else {
+    }else {
         const s = "IMDb." + sort;
         sortQuery = {[s] : -1};
     }

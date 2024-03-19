@@ -38,8 +38,6 @@ async function getMoviesDbSearch(search){
             console.log(jsonobject);
             searchBox();
         });
-        
-        
     }else{
         console.log("The client request tot the server was unsuccessful.");
         console.log(response.status + " | " + response.statusText);
@@ -53,11 +51,11 @@ function searchBox(){
     searchResultsDiv.innerHTML = '';
 
     for(let i = 0; i < 8; i++){
-    let resultDiv = document.createElement('div');
-    resultDiv.innerHTML = jsonobject[i].IMDb.name;
-    resultDiv.onclick = function(){
-        window.location.href = "movieInfo.html?movie=" + jsonobject[i].IMDb._id;
-    }
+        let resultDiv = document.createElement('div');
+        resultDiv.innerHTML = jsonobject[i].IMDb.name;
+        resultDiv.onclick = function(){
+            window.location.href = "movieInfo.html?movie=" + jsonobject[i].IMDb._id;
+        }
     searchResultsDiv.appendChild(resultDiv);
     };
     console.log(searchResultsDiv);
