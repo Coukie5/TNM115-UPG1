@@ -1,6 +1,7 @@
 // declaration and loading (inclusion) of various modules
 const http = require("node:http");
 const MongoClient = require("mongodb").MongoClient;
+const fs = require("node:fs");
 
 //MongoDB server
 const dbHostname = "127.0.0.1";
@@ -38,7 +39,9 @@ const server = http.createServer(async (req, res) => {
         }else if(pathComponents[1] === "random"){
             const dbMovie = await getDatabaseRandom(parseInt(pathComponents[2]));
             sendResponse(res, 200, "application/json", JSON.stringify(dbMovie));
-        }else{
+        }else if(pathComponents[1] === "image"){
+            routing_image(res, pathComponents[2]);
+        } else{
             let db;
             if (pathComponents[1] == "null"){
                 pathComponents[1] = null;
@@ -102,6 +105,37 @@ function routing_data(res, jsonString) {
         // Handle JSON parsing error
         console.error("Error parsing JSON:", error);
         sendResponse(res, 500, "text/plain", "Internal Server Error");
+    }
+}
+
+function routing_image(res, pathComponents){
+
+    // implementation of some simple error handling:
+    // check if there is an insufficient amount of components in the URL's pathname
+    if(pathComponents.length <= 2) sendResponse(res, 400, null, null);  // if no imageName was present in the URL, respond with 400 (Bad Request); docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
+    else {
+
+        // construct the image file path, based on the internal server directory/files organization
+        const imageFilePath = "./MoviePosterDataBase/MoviePosterDataBase/" + pathComponents + ".png";      // observe: ./ at the beginning indicates that the following filepath is relative to THIS file (app.js); in this case, the "media" directory is on the same file level as the "app.js" file
+
+        fs.readFile(imageFilePath, (err, data) => {
+
+            // error handling
+            if(err){
+                console.log("An error ocurred when attempting to read the file at: " + imageFilePath);
+                const imagePlaceholder = "./media/PLACEHOLDER.png";
+                fs.readFile(imagePlaceholder, function(err, data) {
+                    if(err) throw err;
+                    sendResponse(res, 200, "image/png", data);
+                })
+                //sendResponse(res, 404, null, null); // respond with 404 (Not Found); docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
+            } 
+            // success handling
+            else {
+                // send read (serialized) file data as MIME type "image/svg+xml"
+                sendResponse(res, 200, "image/png", data); 
+            }
+        });
     }
 }
 

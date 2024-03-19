@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", async function(){
     
 });
 
+let jsonImg = null;
+
 const serverUrl = "http://127.0.0.1:3001";
 async function getMoviesDbId(search){
     console.log(search)
@@ -21,20 +23,35 @@ async function getMoviesDbId(search){
         body: null
     });
     if(response.ok){
-        response.json().then((jsonBody) => {
-            console.log("The client request to the server was successful.");
-            jsonobject = jsonBody;
-            loadMovieInfo();
-            const bgImg = document.querySelector("#target-Infomovies");
-            let img = new Image();
-            img.src = "../MoviePosterDataBase/MoviePosterDataBase/" + jsonobject[0].IMDb._id + ".png";
-            img.onerror = function() {
-                bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%), url(../media/thegod.jpg)";
-            }
-            img.onload = function() {
-                bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 100%),url(" + img.src + ")";
+
+        const response2 = await fetch(serverUrl + "/image/" + search , {
+            method: "GET",
+            headers: {
+                "Content-Type": "image/png",
             }
         });
+        if(response2.ok){
+            response2.blob().then((blobBody) => {
+                jsonImg = blobBody;
+                console.log(jsonImg)
+                response.json().then((jsonBody) => {
+                    console.log("The client request to the server was successful.");
+                    jsonobject = jsonBody;
+                    loadMovieInfo();
+            });
+            
+        });
+        }
+        
+           /* const bgImg = document.querySelector("#target-Infomovies");
+            let img = new Image();
+            img.src = URL.createObjectURL(jsonImg);
+            img.onerror = function() {
+                bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%)";
+            }
+            img.onload = function() {
+                bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 100%)";
+            }*/
         
     }else{
         console.log("The client request tot the server was unsuccessful.");
@@ -50,6 +67,16 @@ function loadMovieInfo() {
 
     const divContainer = document.createElement("div");
     divContainer.className = "movieInfo-container";
+
+    const bgImg = document.querySelector("#target-Infomovies");
+    let img = new Image();
+    img.src = URL.createObjectURL(jsonImg);
+    img.onerror = function() {
+        bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%)";
+    }
+    img.onload = function() {
+        bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 100%),url(" + img.src + ")";
+    }
 
     console.log(jsonobject)
     // Header
