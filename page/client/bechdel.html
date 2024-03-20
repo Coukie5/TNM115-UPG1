@@ -23,9 +23,9 @@
         <div class="div-onlysort">
             <div class="search-movie-bechdel">
                 <h2 style="color: white;">
-                    <label for="moviename">Name of the movie:</label>
-                    <input type="text" id="moviename" name="moviename" minlength="1">
-                    <button onclick="searchMovie()">Search movie</button>
+                    <label for="moviename">Movies</label>
+                    <input type="text" id="moviename" name="moviename" minlength="1" placeholder="Search movie">
+                    <button onclick="searchMovie()">Search</button>
                 </h2>   
             </div>
             <div>
@@ -38,13 +38,11 @@
                     <option value="bechdel">Bechdel</option>
                     <option value="year">Year</option>
                 </select>
-                <button class="page-button" onclick="handlePage('back')" id="1">Back</button>
-                <button class="page-button" onclick="handlePage('next')" id="1">Next</button>
             </div>
         </div>
         <div>
-            <button onclick="getImdbDb(null,20,0)">Filter</button>
-            <button class="filter-button" onclick="filterDiv()">FilterMnu</button> 
+            <!--<button onclick="getImdbDb(null,20,0)">Filter</button>-->
+            <button class="filter-button" onclick="filterDiv()">Filter</button> 
             <div id="filter-box"></div>
         </div>
     </div>
@@ -86,7 +84,12 @@
             </div>
             <div class="check-score" onclick="calculate()">Check bechdel score</div>
         </div>
-        <div id="target-movies"></div>
+        <div id="target-movies">
+            <div id="page-buttons">
+                <button class="page-button" onclick="handlePage('back')" id="1">Back</button>
+                <button class="page-button" onclick="handlePage('next')" id="1">Next</button>
+            </div>
+        </div>
     </div>
         
     <footer>

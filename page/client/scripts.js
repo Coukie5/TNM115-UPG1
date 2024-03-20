@@ -35,9 +35,15 @@ async function getImdbDb(sort, limit, skipAmount){
         catch(err){
             console.log(err);
         }
+        console.log("This is name:" + searchKey)
+        let url = serverUrl + "/" + sort + "/" + limit + "/" + skipAmount + "/" + filterUrl;
+        if (searchKey !== "") {
+            url += "/" + searchKey;
+        }
+        console.log(url);
     
     
-    const response = await fetch(serverUrl + "/" + sort + "/" + limit + "/" + skipAmount + "/" + filterUrl , {
+    const response = await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -68,6 +74,7 @@ function handlePage(direction){
     }
     console.log(pageNumber);
     skipAmount = (pageNumber-1)*limit;
+
     getImdbDb(currentSort,limit,skipAmount);
     document.getElementsByClassName("page-button")[0].id = pageNumber;
     
@@ -98,20 +105,23 @@ async function getBechdelTitleId(){
 }
 
 // Function to search for a movie/movies
+let searchKey = "";
 async function searchMovie(){
     const movieNameTextValue = document.getElementById("moviename").value;
     console.log("Movie name:");
     console.log(movieNameTextValue);
     console.log(typeof(movieNameTextValue));
     console.log("==========");
-    await getMoviesDbSearch(movieNameTextValue);
+    searchKey = movieNameTextValue;
+    console.log(skipAmount)
+    await getMoviesDbSearch(movieNameTextValue, limit, skipAmount);
     console.log(jsonobject)
 }
 
 // Function to find the searched movie/movies in the database
-async function getMoviesDbSearch(search){
+async function getMoviesDbSearch(search, limit, skipAmount){
     console.log(search)
-    const response = await fetch(serverUrl + "/search/" + search, {
+    const response = await fetch(serverUrl + "/search/" + search + "/" + limit + "/" + skipAmount, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

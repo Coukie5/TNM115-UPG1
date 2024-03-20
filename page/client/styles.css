@@ -392,9 +392,10 @@ footer {
     background-color: #45a29e;
     padding: 50px 50px 50px 50px;
     width: 400px;
-    height: 600px;
+    height: 500px;
     margin-top: 10%;
     margin-bottom: 10%;
+    border-radius: 5px;
 }
 
 .score-container {
@@ -428,6 +429,7 @@ footer {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 /* top div container for bechdel site */
@@ -453,6 +455,17 @@ footer {
     padding-bottom: 5px;  
     border: none;
 }
+
+.search-movie-bechdel button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url("./media/icons8-search.svg");
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    align-items: center;
+}
+
 .div-onlysort{
     display: flex;
     flex-direction: row;
@@ -609,4 +622,32 @@ footer {
 #search-results div:hover {
     background-color: #1e232b; 
     transition: background-color 0.8s ease;
+}
+
+.page-button {
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #45a29e;
+    border: none;
+    margin-right: 10px;
+}
+
+.page-button:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+#page-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: right;
+}
+
+#moviename {
+    width: 200px;
+    border-radius: 2px;
+    padding-left: 5px;
+    height: 30px;
 }

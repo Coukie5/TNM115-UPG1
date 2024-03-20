@@ -26,7 +26,7 @@ const server = http.createServer(async (req, res) => {
     if(req.method == "GET"){
         if(pathComponents[1] === "search"){
             const searchPara = decodeURIComponent(pathComponents[2]);
-            const dbMovie = await getDatabaseSearch(searchPara);
+            const dbMovie = await getDatabaseSearch(searchPara, parseInt(pathComponents[3]), parseInt(pathComponents[4]));
             routing_data(res, JSON.stringify(dbMovie));
         }else if(pathComponents[1] === "searchMovie"){
             const searchPara = decodeURIComponent(pathComponents[2]);
@@ -50,12 +50,19 @@ const server = http.createServer(async (req, res) => {
                 pathComponents[4] = null
             }
             let filter = [];
-            console.log(pathComponents[4]);
+            console.log("This is search: " + pathComponents[5]);
             for(let i = 4; i < pathComponents.length; i++){
                 filter.push(pathComponents[i]);
             }
             console.log(filter);
-            db = await getDatabase(pathComponents[1], filter,parseInt(pathComponents[2]), parseInt(pathComponents[3]));
+            if(pathComponents[5] === undefined){
+                db = await getDatabase(pathComponents[1], filter, parseInt(pathComponents[2]), parseInt(pathComponents[3]));
+            }
+            else {
+                const searchParaName = decodeURIComponent(pathComponents[5]);
+                db = await getDatabase(pathComponents[1], filter, parseInt(pathComponents[2]), parseInt(pathComponents[3]), searchParaName);
+            }
+            
             sendResponse(res, 200, "application/json", JSON.stringify(db));
         }       
         
@@ -138,7 +145,7 @@ function routing_image(res, pathComponents){
 }
 
 // Function to recive movies from the database based on search criteria
-async function getDatabaseSearch(searchName){
+async function getDatabaseSearch(searchName, limit, skipAmount){
     
     const db = dbClient.db("tnm115-project");
     const dbCollection = db.collection("movieDb");  
@@ -148,15 +155,16 @@ async function getDatabaseSearch(searchName){
     // '$regex' operator in MongoDB is used to search for specific strings in the collection
     // 'new RegExp' object is used for matching text with a pattern.
     // 'i' ensures that the search is case-insensitive, matching both uppercase and lowercase letters
-    const filterQuery = {"IMDb.name": { $regex: new RegExp(searchName, 'i') }};
-    const sortQuery = {"IMDb.votes": -1};
-    const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1};
+    const filterQuery = { "IMDb.name": { $regex: new RegExp(searchName, 'i') } };
+    const sortQuery = { "IMDb.votes": -1 };
+    const projectionQuery = { _id: 0, IMDb: 1, bechdel: 1 };
+    console.log(skipAmount);
 
     const findLength = (await dbCollection.find(filterQuery).toArray()).length;
-    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).toArray();
+    const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).skip(skipAmount).limit(limit).toArray();
     console.log("Found/Projected Documents:", findResult);
 
-    return jsonResult = {length: findLength, data: findResult};
+    return jsonResult = { length: findLength, data: findResult };
 }
 
 async function getDatabaseSearchMovie(searchName){
@@ -203,11 +211,12 @@ async function getDatabaseRandom(random){
 }
 
 // Function to recive movies from the database based on filter, sort and limit
-async function getDatabase(sort, filter, limit, skipAmount){
+async function getDatabase(sort, filter, limit, skipAmount, searchName){
     const db = dbClient.db("tnm115-project");
     const dbCollection = db.collection("movieDb");
 
     console.log("F: " + filter);
+    console.log("Name: " + searchName);
     console.log("S:" + sort);
 
     let filterQuery = {};
@@ -216,6 +225,10 @@ async function getDatabase(sort, filter, limit, skipAmount){
     
     if(filter[0] == null){
         filterQuery = {};
+        if (searchName) {
+            console.log("SearchName3: " + searchName);
+            filterQuery["IMDb.name"] = { $regex: new RegExp(searchName, 'i') };
+        }
     }
     else {
         if (filter[0] === ""){
@@ -238,12 +251,21 @@ async function getDatabase(sort, filter, limit, skipAmount){
                 "IMDb.year": {$gte: parseInt(filter[0]), $lte: parseInt(filter[1])},
                 "IMDb.genre": {$all: genres}
             };
+
+            if (searchName) {
+                console.log("SearchName: " + searchName);
+                filterQuery["IMDb.name"] = { $regex: new RegExp(searchName, 'i') };
+            }
         } else {
             const allGenres = {$ne: ""};
             filterQuery = {
                 "IMDb.year": {$gte: parseInt(filter[0]), $lte: parseInt(filter[1])},
                 "IMDb.genre": allGenres
             };
+            if (searchName) {
+                console.log("SearchName2: " + searchName);
+                filterQuery["IMDb.name"] = { $regex: new RegExp(searchName, 'i') };
+            }
         }
         console.log(genres);
     }
@@ -262,6 +284,7 @@ async function getDatabase(sort, filter, limit, skipAmount){
 
     console.log(filterQuery)
     console.log(sortQuery)
+    console.log("Skip: " + skipAmount)
 
     const projectionQuery = {_id: 0, IMDb: 1, bechdel: 1, runtimeValue: 1};
     const findLength = (await dbCollection.find(filterQuery).toArray()).length;
