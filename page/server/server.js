@@ -41,7 +41,25 @@ const server = http.createServer(async (req, res) => {
             sendResponse(res, 200, "application/json", JSON.stringify(dbMovie));
         }else if(pathComponents[1] === "image"){
             routing_image(res, pathComponents[2]);
-        } else{
+        } else if(pathComponents[1] === "searchP"){
+            const searchPara = decodeURIComponent(pathComponents[2]);
+            console.log("THIS IS THE SEARCHPARA: " + searchPara);
+            let db;
+            if(pathComponents[3] == "null"){
+                pathComponents[3] = null;
+            }
+            if(pathComponents[6] == "null"){
+                pathComponents[6] = null;
+            }
+            let filter = [];
+            for(let i = 6; i < pathComponents.length; i++){
+                filter.push(pathComponents[i]);
+            }
+            console.log(filter);
+            const dbMovie = await getDatabase(pathComponents[3], filter, parseInt(pathComponents[4]), parseInt(pathComponents[5]), searchPara);
+            
+            sendResponse(res, 200, "application/json", JSON.stringify(dbMovie));
+        }else{
             let db;
             if (pathComponents[1] == "null"){
                 pathComponents[1] = null;
@@ -50,20 +68,18 @@ const server = http.createServer(async (req, res) => {
                 pathComponents[4] = null
             }
             let filter = [];
-            console.log("This is search: " + pathComponents[5]);
+            console.log(pathComponents[4]);
             for(let i = 4; i < pathComponents.length; i++){
                 filter.push(pathComponents[i]);
             }
             console.log(filter);
-            if(pathComponents[5] === undefined){
-                db = await getDatabase(pathComponents[1], filter, parseInt(pathComponents[2]), parseInt(pathComponents[3]));
-            }
-            else {
+            db = await getDatabase(pathComponents[1], filter,parseInt(pathComponents[2]), parseInt(pathComponents[3]));
+            sendResponse(res, 200, "application/json", JSON.stringify(db));
+
+/*
                 const searchParaName = decodeURIComponent(pathComponents[5]);
                 db = await getDatabase(pathComponents[1], filter, parseInt(pathComponents[2]), parseInt(pathComponents[3]), searchParaName);
-            }
-            
-            sendResponse(res, 200, "application/json", JSON.stringify(db));
+*/
         }       
         
     }

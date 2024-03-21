@@ -38,11 +38,11 @@ async function getImdbDb(sort, limit, skipAmount){
         console.log("This is name:" + searchKey)
         let url = serverUrl + "/" + sort + "/" + limit + "/" + skipAmount + "/" + filterUrl;
         if (searchKey !== "") {
-            url += "/" + searchKey;
+            url = serverUrl + "/searchP/" + searchKey + "/" + sort + "/" + limit + "/" + skipAmount + "/" + filterUrl;
         }
         console.log(url);
-    
-    
+
+        
     const response = await fetch(url, {
         method: "GET",
         headers: {
