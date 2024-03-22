@@ -52,21 +52,24 @@ function loadMovieInfo() {
     if (container) {
         container.remove();
     }
-
+    
     const divContainer = document.createElement("div");
     divContainer.className = "movieInfo-container";
 
     const bgImg = document.querySelector("#target-Infomovies");
+    
     let img = new Image();
     img.src = URL.createObjectURL(jsonImg);
-    img.onerror = function() {
-        bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%)";
-    }
+    
+    //om de inte finns bild är fade blå ifrån
     img.onload = function() {
-        bgImg.style.backgroundImage = "linear-gradient(to right, black, transparent 50%),url(" + img.src + ")";
+        bgImg.style.backgroundImage = "url(" + img.src + ")";
     }
-
+        
     console.log(jsonobject)
+
+    
+
     // Header
     const divMovieBox = document.createElement("div");
     divMovieBox.className = "movieInfo-header";
@@ -175,6 +178,5 @@ function loadMovieInfo() {
     divBechdelBox.appendChild(listCriteria);
     
     divContainer.appendChild(divBechdelBox);
-    const target = document.getElementById("target-Infomovies")
-    target.appendChild(divContainer);
+    bgImg.appendChild(divContainer);
 }

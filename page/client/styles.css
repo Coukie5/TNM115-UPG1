@@ -319,8 +319,10 @@ footer {
     flex-direction: column;
     padding-left: 5%;
     padding-top: 10%;
-    max-width: 50%;
+    max-width: 100%;
+    background-image: linear-gradient(to right, #0b0c10 45%, transparent);
 }
+
 
 .movieInfo-header {
     color: #c5c6c7;
@@ -338,7 +340,7 @@ footer {
 
 .movieInfo-Desc {
     margin-top: 2%;
-    width: 70%;
+    width: 50%;
     color: #c5c6c7;
 }
 
@@ -380,7 +382,7 @@ footer {
 }
 
 .movieInfo-bechdel-box {
-    width: 700px;
+    width: 500px;
     border: 1px solid #c5c6c7;
     padding: 50px 100px 50px 100px;
     margin-top: 1%;
@@ -410,8 +412,10 @@ footer {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: left;
-    align-items: center;
+    align-items: center;    
     margin-bottom: 0;
+    margin-left: 85px;
+    margin-top: 2%;
     padding-bottom: 0;
 }
 
@@ -471,6 +475,8 @@ footer {
     font-size: 16px;
     padding: 10px;
 }
+
+
 
 .sortMenu:hover {
     background-color: #45a29e;
@@ -555,7 +561,8 @@ footer {
     color: #0b0c10;
     cursor: pointer;
     margin-bottom: 10px;
-    margin-left: 5px;
+    margin-left: 90px;
+    margin-top: 10px;
 }
 
 .filter-button:hover {
