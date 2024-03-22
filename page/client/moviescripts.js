@@ -61,14 +61,11 @@ function loadMovieInfo() {
     let img = new Image();
     img.src = URL.createObjectURL(jsonImg);
     
-    //om de inte finns bild är fade blå ifrån
     img.onload = function() {
         bgImg.style.backgroundImage = "url(" + img.src + ")";
     }
         
     console.log(jsonobject)
-
-    
 
     // Header
     const divMovieBox = document.createElement("div");
