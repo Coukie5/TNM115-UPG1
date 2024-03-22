@@ -20,13 +20,13 @@
     </nav>
 
     <div class="div-topsort-container">
-        <div class="div-onlysort">
+        <div class="search-sort-container">
             <div class="search-movie-bechdel">
-                <h2 style="color: white;">
-                    <label for="moviename">Movies</label>
+                <label for="moviename">Movies</label>
+                <div class="search-movie-bechdel-container">
                     <input type="text" id="moviename" name="moviename" minlength="1" placeholder="Search movie">
-                    <button onclick="searchMovie()">Search</button>
-                </h2>   
+                    <button class="search-button-bechdel" onclick="searchMovie()"></button>
+                </div>
             </div>
             <div>
                 <label class="sort-text">Sort by:</label>
