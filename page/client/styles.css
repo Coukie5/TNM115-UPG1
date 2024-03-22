@@ -60,13 +60,20 @@ nav .nav-items ul li a {
     text-decoration: none;
     border-radius: 25px;
     padding: 10px 20px; 
-    background-color: #1e232b; 
     transition: background-color 0.3s ease;
 }
 
 nav .nav-items ul li a:hover {
     background-color: #45a29e; 
     transition: background-color 0.8s ease;
+}
+
+.nav-onsite {
+    background-color: #45a29e;
+}
+
+.nav-offsite {
+    background-color: #1f2833;
 }
 
 /* Searchfield in navbar */
