@@ -1,17 +1,13 @@
+let jsonImg = null;
 document.addEventListener("DOMContentLoaded", async function(){
     console.log("HTML DOM tree loaded, and ready for manipulation.");
-    // === YOUR FUNCTION CALL TO INITIATE THE GENERATION OF YOUR WEB PAGE SHOULD GO HERE ===
 
     const webpageURL = new URL(document.URL);
-
     const param = webpageURL.searchParams.get("movie");
 
     await getMoviesDbId(param);
     
 });
-
-let jsonImg = null;
-
 
 async function getMoviesDbId(search){
     console.log(search)
@@ -23,7 +19,6 @@ async function getMoviesDbId(search){
         body: null
     });
     if(response.ok){
-
         const response2 = await fetch(serverUrl + "/image/" + search , {
             method: "GET",
             headers: {
@@ -56,12 +51,12 @@ function loadMovieInfo() {
     const divContainer = document.createElement("div");
     divContainer.className = "movieInfo-container";
 
+    //Background image
     const bgImg = document.querySelector("#target-Infomovies");
     
     let img = new Image();
     img.src = URL.createObjectURL(jsonImg);
-    
-    //om de inte finns bild är fade blå ifrån
+  
     img.onload = function() {
         bgImg.style.backgroundImage = "url(" + img.src + ")";
     }
@@ -78,7 +73,6 @@ function loadMovieInfo() {
     
     divMovieBox.appendChild(textElement);
     divContainer.appendChild(divMovieBox);
-
 
     //Info: IMDb, Duration, Year
     const divMovieInfoCon = document.createElement("div");
@@ -105,7 +99,6 @@ function loadMovieInfo() {
     divMovieInfo3.appendChild(textYear);
     divMovieInfoCon.appendChild(divMovieInfo3);
     divContainer.appendChild(divMovieInfoCon);
-
 
     //Description
     const divMovieDesc = document.createElement("div");

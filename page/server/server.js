@@ -75,11 +75,6 @@ const server = http.createServer(async (req, res) => {
             console.log(filter);
             db = await getDatabase(pathComponents[1], filter,parseInt(pathComponents[2]), parseInt(pathComponents[3]));
             sendResponse(res, 200, "application/json", JSON.stringify(db));
-
-/*
-                const searchParaName = decodeURIComponent(pathComponents[5]);
-                db = await getDatabase(pathComponents[1], filter, parseInt(pathComponents[2]), parseInt(pathComponents[3]), searchParaName);
-*/
         }       
         
     }
@@ -119,9 +114,7 @@ function sendResponse(res, statusCode, contentType, data){
 function routing_data(res, jsonString) {
     try {
         const movieJsonDataFromDb = JSON.parse(jsonString);
-
         sendResponse(res, 200, "application/json", jsonString);
-
     } catch (error) {
         // Handle JSON parsing error
         console.error("Error parsing JSON:", error);
@@ -144,12 +137,7 @@ function routing_image(res, pathComponents){
             // error handling
             if(err){
                 console.log("An error ocurred when attempting to read the file at: " + imageFilePath);
-                const imagePlaceholder = "./media/PLACEHOLDER.png";
-                fs.readFile(imagePlaceholder, function(err, data) {
-                    if(err) throw err;
-                    sendResponse(res, 200, "image/png", data);
-                })
-                //sendResponse(res, 404, null, null); // respond with 404 (Not Found); docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
+                sendResponse(res, 404, null, null); // respond with 404 (Not Found); docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
             } 
             // success handling
             else {
@@ -174,7 +162,6 @@ async function getDatabaseSearch(searchName, limit, skipAmount){
     const filterQuery = { "IMDb.name": { $regex: new RegExp(searchName, 'i') } };
     const sortQuery = { "IMDb.votes": -1 };
     const projectionQuery = { _id: 0, IMDb: 1, bechdel: 1 };
-    console.log(skipAmount);
 
     const findLength = (await dbCollection.find(filterQuery).toArray()).length;
     const findResult = await dbCollection.find(filterQuery).sort(sortQuery).project(projectionQuery).skip(skipAmount).limit(limit).toArray();

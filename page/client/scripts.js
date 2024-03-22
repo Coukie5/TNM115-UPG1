@@ -5,7 +5,6 @@ let numberOfMovies = 0;
 
 document.addEventListener("DOMContentLoaded", async function(){
     console.log("HTML DOM tree loaded, and ready for manipulation.");
-    // === YOUR FUNCTION CALL TO INITIATE THE GENERATION OF YOUR WEB PAGE SHOULD GO HERE ===
     
     await getImdbDb(null,limit,0)
 });
@@ -17,7 +16,6 @@ async function getImdbDb(sort, limit, skipAmount){
     let filterUrl = null;
 
         try{
-            
             const fromYear = document.getElementById("from-year-bar").value;
             const toYear = document.getElementById("to-year-bar").value;
             const selectedGenres = document.getElementsByClassName("selected"); 
@@ -30,18 +28,15 @@ async function getImdbDb(sort, limit, skipAmount){
                 filterUrl = filterUrl + "/" + selectedGenres[i].innerHTML;
             }
             console.log(filterUrl);
-
         }
         catch(err){
             console.log(err);
         }
-        console.log("This is name:" + searchKey)
         let url = serverUrl + "/" + sort + "/" + limit + "/" + skipAmount + "/" + filterUrl;
         if (searchKey !== "") {
             url = serverUrl + "/searchP/" + searchKey + "/" + sort + "/" + limit + "/" + skipAmount + "/" + filterUrl;
         }
         console.log(url);
-
         
     const response = await fetch(url, {
         method: "GET",
@@ -57,8 +52,6 @@ async function getImdbDb(sort, limit, skipAmount){
             numberOfMovies = jsonBody.length;
             loadMovies();
         });
-        
-        
     }else{
         console.log("The client request tot the server was unsuccessful.");
         console.log(response.status + " | " + response.statusText);
@@ -77,12 +70,10 @@ function handlePage(direction){
 
     getImdbDb(currentSort,limit,skipAmount);
     document.getElementsByClassName("page-button")[0].id = pageNumber;
-    
 }
 
 // Function to load more movies
 async function getBechdelTitleId(){
-        
     const response = await fetch(serverUrl , {
         method: "GET",
         headers: {
@@ -96,8 +87,6 @@ async function getBechdelTitleId(){
             jsonobject = jsonBody;
             loadMovies();
         });
-        
-        
     }else{
         console.log("The client request tot the server was unsuccessful.");
         console.log(response.status + " | " + response.statusText);
@@ -136,8 +125,6 @@ async function getMoviesDbSearch(search, limit, skipAmount){
             console.log(jsonobject.length)
             loadMovies();
         });
-        
-        
     }else{
         console.log("The client request tot the server was unsuccessful.");
         console.log(response.status + " | " + response.statusText);
@@ -153,7 +140,7 @@ function loadMovies(){
     
     const divContainer = document.createElement("div");
     divContainer.className = "movies-container";
-    console.log(pageNumber)
+
     const loadedMovies = document.createElement("div");
     const loadText = document.createElement("p");
     loadText.style = "font-size: 20px";
@@ -176,7 +163,6 @@ function loadMovies(){
         divMovieBox.className = "movie-box";
         divMovieBox.onclick = function(){
             window.location.href = "movieInfo.html?movie=" + divMovieBox.id;
-
         }
         const listItem = document.createElement("li");
 
@@ -244,7 +230,6 @@ function loadMovies(){
         textBechdel.innerHTML = "Bechdel: passed " + movie.bechdel + " of 3 tests";
         listItem.appendChild(textBechdel);
         
-        //itemInfo.appendChild(listItem)
         divMovieBox.appendChild(listItem);
         listElement.appendChild(divMovieBox);
     }); 
@@ -337,8 +322,6 @@ function genreSelected() {
 }
 
 function filterDiv() {
-
-//Skrev om lite av koden så att filter-boxen redan finns från början // Felix
     const divContainer = document.getElementById('filter-box');
     divContainer.className = 'filter-container';
     
@@ -403,7 +386,6 @@ function filterDiv() {
         const listItem = document.createElement("li");
         listItem.innerHTML = genre;
         listItem.onclick = function(){
-            //listItem.classList.toggle("selected");
             genreSelected();
         }
         listElement.appendChild(listItem);

@@ -45,9 +45,7 @@ async function getMoviesDbSearch(search){
 }
 
 function searchBox(){
-
     let searchResultsDiv = document.querySelector('#search-results');
-
     searchResultsDiv.innerHTML = '';
 
     for(let i = 0; i < 8; i++){
@@ -68,7 +66,6 @@ function randomizeMovie(){
 }
 
 async function getMovieRandom(random){
-
     const response = await fetch(serverUrl + "/random/" + random , {
         method: "GET",
         headers: {
@@ -83,8 +80,6 @@ async function getMovieRandom(random){
             console.log(jsonobject);
             loadRandomMovie();
         });
-        
-        
     }else{
         console.log("The client request tot the server was unsuccessful.");
         console.log(response.status + " | " + response.statusText);

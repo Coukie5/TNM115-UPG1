@@ -42,9 +42,7 @@ async function getMoviesDbSearch(search){
 }
 
 function searchBox(){
-
     let searchResultsDiv = document.querySelector('#search-results-nav');
-
     searchResultsDiv.innerHTML = '';
 
     for(let i = 0; i < 8; i++){
