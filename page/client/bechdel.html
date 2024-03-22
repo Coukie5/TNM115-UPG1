@@ -22,13 +22,13 @@
     <div class="div-topsort-container">
         <div class="div-onlysort">
             <div class="search-movie-bechdel">
-                <h2 style="color: white;">
-                    <label for="moviename">Movies</label>
-                    <input type="text" id="moviename" name="moviename" minlength="1" placeholder="Search movie">
-                    <button onclick="searchMovie()">Search</button>
-                </h2>   
+    
+                    <h2 style="color: white;" for="moviename">Movies</h2>
+                    <input class="searchBar" type="text" id="moviename" name="moviename" minlength="1" placeholder="Search movie">
+                    <button class="searchButton" onclick="searchMovie()"></button>
+                
             </div>
-            <div>
+            <div class="sortDiv">
                 <label class="sort-text">Sort by:</label>
                 <select class="sortMenu" id="sortOptions" onchange="sortBy()">
                     <option value="votes">Popularity</option>

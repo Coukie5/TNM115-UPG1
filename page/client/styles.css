@@ -260,8 +260,10 @@ footer {
     flex-direction: column;
     padding-left: 5%;
     padding-top: 10%;
-    max-width: 50%;
+    max-width: 100%;
+    background-image: linear-gradient(to right, #0b0c10 45%, transparent);
 }
+
 
 .movieInfo-header {
     color: #c5c6c7;
@@ -279,7 +281,7 @@ footer {
 
 .movieInfo-Desc {
     margin-top: 2%;
-    width: 70%;
+    width: 50%;
     color: #c5c6c7;
 }
 
@@ -321,7 +323,7 @@ footer {
 }
 
 .movieInfo-bechdel-box {
-    width: 700px;
+    width: 500px;
     border: 1px solid #c5c6c7;
     padding: 50px 100px 50px 100px;
     margin-top: 1%;
@@ -444,9 +446,21 @@ footer {
 
 .search-movie-bechdel {
     display: flex;
+    background-color: #1f2833;
     flex-direction: row;
     align-items: center;
     margin-right: 2%;
+    margin-top: 2%;
+    margin-left: 3.5%
+}
+
+.searchBar {
+    margin-left: 2%;
+}
+
+.searchButton {
+    background-color: #66fcf1;
+    margin-left: 2%;
 }
 
 .search-movie-bechdel input {
@@ -471,7 +485,7 @@ footer {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: left;
-    align-items: center;
+    align-items: center;    
     margin-bottom: 0;
     padding-bottom: 0;
 }
@@ -484,6 +498,10 @@ footer {
     color: #fff;
     font-size: 16px;
     padding: 10px;
+}
+
+.sortDiv {
+    margin-top: 2%;
 }
 
 .sortMenu:hover {
@@ -569,6 +587,7 @@ footer {
     color: #0b0c10;
     cursor: pointer;
     margin-bottom: 10px;
+    margin-left: 3.5%;
 }
 
 .filter-button:hover {
@@ -651,3 +670,4 @@ footer {
     padding-left: 5px;
     height: 30px;
 }
+
