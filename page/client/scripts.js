@@ -189,17 +189,17 @@ function loadMovies(){
         divMovieInfo.className = "div-movie-info";
 
         const textRuntime = document.createElement("p");
-        textRuntime.className = "flexitem";
+        textRuntime.className = "movie-item";
         textRuntime.innerHTML = "Duration: " + movie.IMDb.runtime;
         divMovieInfo.appendChild(textRuntime);
 
         const textYear = document.createElement("p");
-        textYear.className = "flexitem";
+        textYear.className = "movie-item";
         textYear.innerHTML = "Year :" + movie.IMDb.year;
         divMovieInfo.appendChild(textYear);
 
         const textImdb = document.createElement("p");
-        textImdb.className = "flexitem";
+        textImdb.className = "movie-item";
         textImdb.innerHTML = "IMDb :" + movie.IMDb.rating;
         divMovieInfo.appendChild(textImdb);
         listItem.appendChild(divMovieInfo);
@@ -212,13 +212,13 @@ function loadMovies(){
         divDirAct.className = "div-movie-info";
 
         const textDir = document.createElement("p");
-        textDir.className = "flexitem";
+        textDir.className = "movie-item";
         textDir.innerHTML = "Director: " + movie.IMDb.director[0];
         divDirAct.appendChild(textDir);
         
         if (movie.IMDb.star){
             const textStar = document.createElement("p");
-            textStar.className = "flexitem";
+            textStar.className = "movie-item";
             let actorText = "Actors: ";
 
             for(let i = 0; i < movie.IMDb.star.length && i < 2; i++){
